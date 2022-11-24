@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/meme_view">
+
+    <TextView
+        android:id="@+id/meme_name"
+        android:layout_width="match_parent"
+        android:layout_height="25dp"
+        android:layout_above="@+id/meme_src_id"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginStart="0dp"
+        android:layout_marginTop="0dp"
+        android:layout_marginEnd="0dp"
+        android:layout_marginBottom="44dp"
+        android:text="@string/meme_name_"
+        android:textSize="32sp"
+        android:gravity="center"/>
+
+    <ImageView
+        android:id="@+id/meme_src_id"
+        android:layout_width="match_parent"
+        android:layout_height="334dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="1dp"
+        android:layout_marginTop="-43dp"
+        android:layout_marginEnd="-1dp"
+        android:layout_marginBottom="328dp"
+        android:src="@drawable/loading" />
+</RelativeLayout>

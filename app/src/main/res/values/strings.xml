@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">Milestone2</string>
+    <string name="milestone_2">Milestone 2</string>
+    <string name="meme_name_">Meme Name</string>
 </resources>

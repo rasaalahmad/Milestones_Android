@@ -1,10 +1,34 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <color name="white">#FFFFFF</color>
     <color name="purple_200">#FFBB86FC</color>
     <color name="purple_500">#FF6200EE</color>
     <color name="purple_700">#FF3700B3</color>
     <color name="teal_200">#FF03DAC5</color>
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
-    <color name="white">#FFFFFFFF</color>
+    <color name="yellow">#FFDE00</color>
+    <color name="pink">#FFAAAA</color>
+    <color name="light_orange">#FFCC99</color>
+    <color name="lime_green">#CCFF00</color>
+    <color name="green">#5DBE3F</color>
+    <color name="blue">#79B6EB</color>
+    <color name="grey">#CCCCCC</color>
+    <color name="electric_blue">#99FFFF</color>
+    <color name="humming_bird">#C0FFEE</color>
+    <color name="turquoise">#60CECE</color>
+    <color name="turtles_1">#46A094</color>
+    <color name="turtles_2">#6BBD99</color>
+    <color name="turtles_3">#AECFA4</color>
+    <color name="turtles_4">#C4E8C2</color>
+    <color name="stromi_1">#3B7197</color>
+    <color name="stromi_2">#4A8DB7</color>
+    <color name="stromi_3">#74BDE0</color>
+    <color name="stromi_4">#A1E1FA</color>
+    <color name="stromi_5">#64BADB</color>
+    <color name="stromi_6">#AED6F1</color>
+    <color name="lagoon_1">#0295A9</color>
+    <color name="lagoon_2">#12ADC1</color>
+    <color name="lagoon_3">#FDD037</color>
+    <color name="parrot_green">#2ECC71</color>
 </resources>
