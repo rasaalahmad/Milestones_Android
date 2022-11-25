@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.squareup.picasso.Picasso
 
 class MemeViewAdapter(private val memeList: List<MemeModel>):RecyclerView.Adapter<MemeViewAdapter.ViewHolder>() {
 
@@ -23,7 +24,9 @@ class MemeViewAdapter(private val memeList: List<MemeModel>):RecyclerView.Adapte
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val model:MemeModel = memeList[position]
         holder.memeName.text = model.memeName!!
-        holder.memeImage.setImageURI(Uri.parse(model.memeImageSrc))
+        Picasso.get().load(model.memeImageSrc).into(holder.memeImage);
+
+    //holder.memeImage.setImageURI(Uri.parse(model.memeImageSrc))
     }
 
     override fun getItemCount(): Int {
