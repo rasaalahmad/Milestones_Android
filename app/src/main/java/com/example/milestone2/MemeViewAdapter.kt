@@ -21,19 +21,20 @@ class MemeViewAdapter(private val memeList: List<MemeModel>):RecyclerView.Adapte
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        var model:MemeModel = memeList[position]
-        holder.meme_name.text = model.memeName!!
-        holder.meme_img.setImageURI(Uri.parse(model.memeImageSrc))
+        val model:MemeModel = memeList[position]
+        holder.memeName.text = model.memeName!!
+        holder.memeImage.setImageURI(Uri.parse(model.memeImageSrc))
     }
 
     override fun getItemCount(): Int {
         return memeList.size
     }
-    
+
     class ViewHolder(ItemView: View) : RecyclerView.ViewHolder(ItemView)
     {
-        var meme_name: TextView = itemView.findViewById(R.id.meme_name)
-        var meme_img: ImageView= itemView.findViewById(R.id.meme_src_id)
+        var memeName: TextView = itemView.findViewById(R.id.meme_name)
+        var memeImage: ImageView= itemView.findViewById(R.id.meme_src_id)
+
     }
 
 
