@@ -1,6 +1,5 @@
 package com.example.milestone2
 
-import android.net.Uri
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -24,9 +23,7 @@ class MemeViewAdapter(private val memeList: List<MemeModel>):RecyclerView.Adapte
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val model:MemeModel = memeList[position]
         holder.memeName.text = model.memeName!!
-        Picasso.get().load(model.memeImageSrc).into(holder.memeImage);
-
-    //holder.memeImage.setImageURI(Uri.parse(model.memeImageSrc))
+        Picasso.get().load(model.memeImageSrc).into(holder.memeImage)
     }
 
     override fun getItemCount(): Int {

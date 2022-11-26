@@ -1,12 +1,11 @@
 package com.example.milestone2
 
-import com.google.gson.GsonBuilder
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
 object MemeAPI {
 
-    const val baseUrl = "https://api.imgflip.com/get_memes/"
+    private const val baseUrl = "https://api.imgflip.com/get_memes/"
 
     fun getInstance(): Retrofit {
         return Retrofit.Builder().baseUrl(baseUrl)
