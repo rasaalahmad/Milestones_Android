@@ -23,7 +23,10 @@ class MainActivity : AppCompatActivity() {
         val rView:RecyclerView = findViewById(R.id.meme_recycler_view)
         rView.layoutManager = LinearLayoutManager(this)
 
+        // calling get method from api
         val call: Call<MemeData> = MemeAPI.getInstance().create(MemeAPIEndpointInterface::class.java).getMemeData()
+        // Asynchronously send the request and notify callback of its response
+        // or if an error occurred talking to the server, creating the request, or processing the response.
         call.enqueue(object : Callback<MemeData> {
             override fun onResponse(
                 call: Call<MemeData>,
@@ -40,7 +43,9 @@ class MainActivity : AppCompatActivity() {
                         ))
                     }
 
+                    // adding list to the custom meme adapter
                     adapter = MemeViewAdapter(memesModelList)
+                    // attaching it with recycler view adapter
                     rView.adapter = adapter
                     //Log.d("Test: ", memesList?.memes?.size.toString())
                 }

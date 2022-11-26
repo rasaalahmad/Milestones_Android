@@ -23,6 +23,8 @@ class MemeViewAdapter(private val memeList: List<MemeModel>):RecyclerView.Adapte
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val model:MemeModel = memeList[position]
         holder.memeName.text = model.memeName!!
+        // Picasso to load image from link
+        // in api response the image src is in the form of link
         Picasso.get().load(model.memeImageSrc).into(holder.memeImage)
     }
 
@@ -30,12 +32,11 @@ class MemeViewAdapter(private val memeList: List<MemeModel>):RecyclerView.Adapte
         return memeList.size
     }
 
+    // view holder class that extends the Recycler view holder
     class ViewHolder(ItemView: View) : RecyclerView.ViewHolder(ItemView)
     {
         var memeName: TextView = itemView.findViewById(R.id.meme_name)
         var memeImage: ImageView= itemView.findViewById(R.id.meme_src_id)
 
     }
-
-
 }
