@@ -16,16 +16,33 @@
         android:text="@string/meme_name_"
         android:textSize="32sp" />
 
+
     <ImageView
-        android:id="@+id/meme_src_id"
+        android:id="@+id/shape"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="358dp"
         android:layout_below="@+id/meme_name"
         android:layout_alignParentStart="true"
         android:layout_alignParentEnd="true"
         android:layout_marginStart="0dp"
-        android:layout_marginTop="-1dp"
+        android:layout_marginTop="3dp"
         android:layout_marginEnd="0dp"
+        android:contentDescription="@string/background_image"
+        android:src="@drawable/shape_design" />
+
+    <ImageView
+        android:id="@+id/meme_src_id"
+        android:layout_width="359dp"
+        android:layout_height="215dp"
+        android:layout_below="@+id/meme_name"
+        android:layout_alignBottom="@+id/shape"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="42dp"
+        android:layout_marginEnd="24dp"
+        android:layout_marginBottom="49dp"
+        android:contentDescription="@string/meme_from_api"
         android:foregroundGravity="center"
         android:src="@drawable/loading" />
 </RelativeLayout>
