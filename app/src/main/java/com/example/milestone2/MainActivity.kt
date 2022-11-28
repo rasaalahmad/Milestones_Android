@@ -32,7 +32,7 @@ class MainActivity : AppCompatActivity() {
                 response: Response<MemeData>
             ) {
                 if (response.isSuccessful) {
-                    memesList = response.body()!!.data!!
+                    memesList = response.body()?.data!!
                     // adding list to the custom meme adapter
                     adapter = memesList.memes?.let { MemeViewAdapter(it) }!!
                     // attaching it with recycler view adapter
