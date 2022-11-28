@@ -5,6 +5,6 @@ import retrofit2.Call
 import retrofit2.http.GET
 
 interface MemeAPIEndpointInterface {
-    @GET(".") // . because we use the same link of api to get data
+    @GET("get_memes")
     fun getMemeData(): Call<MemeData>
 }

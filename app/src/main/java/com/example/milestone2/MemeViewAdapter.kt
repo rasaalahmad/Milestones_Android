@@ -6,9 +6,10 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.example.milestone2.memeclasses.Meme
 import com.squareup.picasso.Picasso
 
-class MemeViewAdapter(private val memeList: List<MemeModel>):RecyclerView.Adapter<MemeViewAdapter.ViewHolder>() {
+class MemeViewAdapter(private val memeList: List<Meme>):RecyclerView.Adapter<MemeViewAdapter.ViewHolder>() {
 
     // create new views
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -21,11 +22,11 @@ class MemeViewAdapter(private val memeList: List<MemeModel>):RecyclerView.Adapte
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val model:MemeModel = memeList[position]
-        holder.memeName.text = model.memeName!!
+        val model:Meme = memeList[position]
+        holder.memeName.text = model.name!!
         // Picasso to load image from link
         // in api response the image src is in the form of link
-        Picasso.get().load(model.memeImageSrc).into(holder.memeImage)
+        Picasso.get().load(model.url).into(holder.memeImage)
     }
 
     override fun getItemCount(): Int {

@@ -14,7 +14,6 @@ import retrofit2.Response
 class MainActivity : AppCompatActivity() {
 
     lateinit var memesList: Data
-    val memesModelList:ArrayList<MemeModel> = ArrayList()
     lateinit var adapter:MemeViewAdapter
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -34,20 +33,10 @@ class MainActivity : AppCompatActivity() {
             ) {
                 if (response.isSuccessful) {
                     memesList = response.body()!!.data!!
-
-                    // adding response to List of Meme Data
-                    for ( item in memesList.memes?.indices!!)
-                    {
-                        memesModelList.add(MemeModel(memesList.memes!![item].name,
-                            memesList.memes!![item].url
-                        ))
-                    }
-
                     // adding list to the custom meme adapter
-                    adapter = MemeViewAdapter(memesModelList)
+                    adapter = memesList.memes?.let { MemeViewAdapter(it) }!!
                     // attaching it with recycler view adapter
                     rView.adapter = adapter
-                    //Log.d("Test: ", memesList?.memes?.size.toString())
                 }
                 else
                 {

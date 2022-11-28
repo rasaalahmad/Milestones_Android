@@ -5,7 +5,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 object MemeAPI {
 
-    private const val baseUrl = "https://api.imgflip.com/get_memes/"
+    private const val baseUrl = "https://api.imgflip.com/"
 
     fun getInstance(): Retrofit {
         return Retrofit.Builder().baseUrl(baseUrl)
