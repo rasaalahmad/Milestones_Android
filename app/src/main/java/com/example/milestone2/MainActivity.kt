@@ -103,12 +103,6 @@ class MainActivity : AppCompatActivity() {
                         // attaching it with recycler view adapter
                         rView.adapter = adapter
 
-
-                        //Log.d("APP CHECK", memesList.memes!!.toString())
-                        // Storing data into SharedPreferences
-
-                        // Creating an Editor object to edit(write to the file)
-
                         // Creating an Editor object to edit(write to the file)
                         val editor = sharedPreferences.edit()
 
@@ -143,9 +137,9 @@ class MainActivity : AppCompatActivity() {
         {
             val type: Type = object : TypeToken<ArrayList<Meme?>?>() {}.type
             val memes:ArrayList<Meme>? = gson.fromJson(json, type)
-            Log.d("APP CHECK 2", memes!!.toString())
+            //Log.d("APP CHECK 2", memes!!.toString())
 
-            adapter = MemeViewAdapter(memes)
+            adapter = MemeViewAdapter(memes!!)
             // attaching it with recycler view adapter
             rView.adapter = adapter
         }
