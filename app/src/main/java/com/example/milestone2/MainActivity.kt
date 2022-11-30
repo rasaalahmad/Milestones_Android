@@ -26,61 +26,10 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        //Log.d("Test1:" , "123")
         val rView:RecyclerView = findViewById(R.id.meme_recycler_view)
         rView.layoutManager = LinearLayoutManager(this)
+
         val sharedPreferences = getSharedPreferences("MileStone", MODE_PRIVATE)
-        /*val sharedPreferences = getSharedPreferences("MileStone", MODE_PRIVATE)
-        val gson:Gson = Gson()
-        //val json = sharedPreferences.getString("Set","")
-
-        // calling get method from api
-        val call: Call<MemeData> = MemeAPI.getInstance().create(MemeAPIEndpointInterface::class.java).getMemeData()
-        // Asynchronously send the request and notify callback of its response
-        // or if an error occurred talking to the server, creating the request, or processing the response.
-        call.enqueue(object : Callback<MemeData> {
-            override fun onResponse(
-                call: Call<MemeData>,
-                response: Response<MemeData>
-            ) {
-                if (response.isSuccessful) {
-                    Log.d("Test:" , "123")
-                    memesList = response.body()?.data!!
-                    // adding list to the custom meme adapter
-                    adapter = memesList.memes?.let { MemeViewAdapter(it) }!!
-                    // attaching it with recycler view adapter
-                    rView.adapter = adapter
-
-                    // Creating an Editor object to edit(write to the file)
-                    val editor = sharedPreferences.edit()
-
-                    val gson = Gson()
-                    val json = gson.toJson(memesList.memes?.let { MemeViewAdapter(it) }!!)
-                    editor.putString("Set",json );
-                    Log.d("Test:" , json!!.toString())
-                    // Storing the key and its value as the data fetched from edittext
-
-                    // Once the changes have been made,
-                    // we need to commit to apply those changes made,
-                    // otherwise, it will throw an error
-
-                    // Once the changes have been made,
-                    // we need to commit to apply those changes made,
-                    // otherwise, it will throw an error
-                    editor.commit()
-                }
-                else
-                {
-                    Log.d("Test: ", "Not successfully")
-                    Toast.makeText(applicationContext, "Connection Error, Please try again later", Toast.LENGTH_LONG).show()
-                }
-            }
-
-            override fun onFailure(call: Call<MemeData>, t: Throwable) {
-                Toast.makeText(applicationContext, "Connection Error, Please try again later", Toast.LENGTH_LONG).show()
-            }
-        })*/
-
 
         val gson:Gson = Gson()
         val json = sharedPreferences.getString("Set","")
@@ -109,7 +58,7 @@ class MainActivity : AppCompatActivity() {
 
                         val json = gson.toJson(memesList.memes!!)
                         editor.putString("Set", json );
-                        Log.d("APP CHECK", json.toString())
+                        //Log.d("APP CHECK", json.toString())
                         // Storing the key and its value as the data fetched from edittext
 
                         // Once the changes have been made,
