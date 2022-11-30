@@ -1,9 +1,15 @@
 package com.example.milestone2
 
+import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.datastore.core.DataStore
+import androidx.datastore.preferences.core.Preferences
+import androidx.datastore.preferences.core.edit
+import androidx.datastore.preferences.core.stringPreferencesKey
+import androidx.datastore.preferences.preferencesDataStore
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.milestone2.memeclasses.Data
@@ -11,7 +17,10 @@ import com.example.milestone2.memeclasses.Meme
 import com.example.milestone2.memeclasses.MemeData
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
-import org.json.JSONObject
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -21,6 +30,10 @@ import java.lang.reflect.Type
 class MainActivity : AppCompatActivity() {
     lateinit var memesList: Data
     lateinit var adapter:MemeViewAdapter
+    lateinit var memestr:String
+    val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "milestone")
+
+    private val memeDatafromAPI = stringPreferencesKey("memes_data_from_api")
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -30,6 +43,15 @@ class MainActivity : AppCompatActivity() {
         rView.layoutManager = LinearLayoutManager(this)
 
         val sharedPreferences = getSharedPreferences("MileStone", MODE_PRIVATE)
+
+        val memeStrDataStore: Flow<Int> = dataStore.data
+            .map { preferences ->
+                // No type safety.
+               memestr = (preferences[memeDatafromAPI] ?: "0") as String
+
+                Log.d("DataStore Check first: ", memestr)
+            }
+
 
         val gson:Gson = Gson()
         val json = sharedPreferences.getString("Set","")
@@ -51,6 +73,13 @@ class MainActivity : AppCompatActivity() {
                         adapter = memesList.memes?.let { MemeViewAdapter(it) }!!
                         // attaching it with recycler view adapter
                         rView.adapter = adapter
+
+                        runBlocking{
+                            launch {
+                                Log.d("DataStore Check: ", "I am here")
+                                storeDataframeAPI()
+                            }
+                        }
 
                         // Creating an Editor object to edit(write to the file)
                         val editor = sharedPreferences.edit()
@@ -91,6 +120,14 @@ class MainActivity : AppCompatActivity() {
             adapter = MemeViewAdapter(memes!!)
             // attaching it with recycler view adapter
             rView.adapter = adapter
+        }
+    }
+
+    suspend fun storeDataframeAPI(){
+        dataStore.edit { preferences ->
+            val gson:Gson = Gson()
+            val json = gson.toJson(memesList.memes!!)
+            preferences[memeDatafromAPI] = json
         }
     }
 }
