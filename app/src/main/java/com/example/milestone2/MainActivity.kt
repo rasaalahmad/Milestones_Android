@@ -30,7 +30,8 @@ import java.lang.reflect.Type
 class MainActivity : AppCompatActivity() {
     lateinit var memesList: Data
     lateinit var adapter:MemeViewAdapter
-    lateinit var memestr:String
+    private val gson:Gson = Gson()
+    //lateinit var memestr:ArrayList<Meme>
     val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "milestone")
 
     private val memeDatafromAPI = stringPreferencesKey("memes_data_from_api")
@@ -44,16 +45,13 @@ class MainActivity : AppCompatActivity() {
 
         val sharedPreferences = getSharedPreferences("MileStone", MODE_PRIVATE)
 
-        val memeStrDataStore: Flow<Int> = dataStore.data
-            .map { preferences ->
-                // No type safety.
-               memestr = (preferences[memeDatafromAPI] ?: "0") as String
-
-                Log.d("DataStore Check first: ", memestr)
+        runBlocking{
+            launch {
+                Log.d("DataStore Check: ", "I am here above if")
+                Log.d("DataStore Check: ", getAll().toString())
             }
+        }
 
-
-        val gson:Gson = Gson()
         val json = sharedPreferences.getString("Set","")
 
         if(json!!.isEmpty())
@@ -128,6 +126,16 @@ class MainActivity : AppCompatActivity() {
             val gson:Gson = Gson()
             val json = gson.toJson(memesList.memes!!)
             preferences[memeDatafromAPI] = json
+        }
+    }
+
+    fun getAll(): Flow<ArrayList<Meme>> {
+        return dataStore.data.map { preferences ->
+            val jsonString = preferences[memeDatafromAPI] ?: "[]"
+            val type: Type = object : TypeToken<ArrayList<Meme?>?>() {}.type
+            val memes:ArrayList<Meme>? = gson.fromJson(jsonString, type)
+            Log.d("DataStore Check first: ", memes!!.toString())
+            memes
         }
     }
 }
