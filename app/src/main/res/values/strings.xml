@@ -4,4 +4,5 @@
     <string name="meme_name_">Meme Name</string>
     <string name="meme_from_api">Meme from API</string>
     <string name="background_image">Background Image</string>
+    <string name="start">Start</string>
 </resources>
