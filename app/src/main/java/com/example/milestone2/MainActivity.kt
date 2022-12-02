@@ -2,6 +2,8 @@ package com.example.milestone2
 
 import android.os.Bundle
 import android.util.Log
+import android.view.View
+import android.widget.Button
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -20,7 +22,16 @@ import java.lang.reflect.Type
 
 class MainActivity : AppCompatActivity() {
     lateinit var memesList: Data
+<<<<<<< Updated upstream
     lateinit var adapter:MemeViewAdapter
+=======
+    lateinit var adapter: MemeViewAdapter
+    private val gson:Gson = Gson()
+    private var memeArray:ArrayList<Meme> = ArrayList()
+    private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "milestone")
+
+    private val memeDatafromAPI = stringPreferencesKey("memes_data_from_api")
+>>>>>>> Stashed changes
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -29,6 +40,7 @@ class MainActivity : AppCompatActivity() {
         val rView:RecyclerView = findViewById(R.id.meme_recycler_view)
         rView.layoutManager = LinearLayoutManager(this)
 
+<<<<<<< Updated upstream
         val sharedPreferences = getSharedPreferences("MileStone", MODE_PRIVATE)
 
         val gson:Gson = Gson()
@@ -36,6 +48,28 @@ class MainActivity : AppCompatActivity() {
 
         if(json!!.isEmpty())
         {
+=======
+        val startBtn: Button = findViewById(R.id.startapp)
+
+        lifecycleScope.launch{
+            getAll().collect{
+                it.forEach{meme ->
+                    memeArray.add(meme)
+                }
+
+                adapter = MemeViewAdapter(memeArray)
+                // attaching it with recycler view adapter
+                rView.adapter = adapter
+                if(memeArray.isNotEmpty())
+                    startBtn.visibility = View.GONE
+                Log.d("Flow collect in scope", memeArray.toString())
+
+            }
+        }
+
+        startBtn.setOnClickListener {
+            startBtn.visibility = View.GONE
+>>>>>>> Stashed changes
             // calling get method from api
             val call: Call<MemeData> = MemeAPI.getInstance().create(MemeAPIEndpointInterface::class.java).getMemeData()
             // Asynchronously send the request and notify callback of its response
@@ -82,8 +116,26 @@ class MainActivity : AppCompatActivity() {
                 }
             })
         }
+<<<<<<< Updated upstream
         else
         {
+=======
+
+    }
+
+
+    suspend fun storeDataframeAPI(){
+        dataStore.edit { preferences ->
+            val gson = Gson()
+            val json = gson.toJson(memesList.memes!!)
+            preferences[memeDatafromAPI] = json
+        }
+    }
+
+    private fun getAll(): Flow<ArrayList<Meme>> {
+        return dataStore.data.map { preferences ->
+            val jsonString = preferences[memeDatafromAPI] ?: "[]"
+>>>>>>> Stashed changes
             val type: Type = object : TypeToken<ArrayList<Meme?>?>() {}.type
             val memes:ArrayList<Meme>? = gson.fromJson(json, type)
             //Log.d("APP CHECK 2", memes!!.toString())

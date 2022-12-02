@@ -22,6 +22,21 @@
         android:textColor="@color/stromi_2"
         app:drawableStartCompat="@drawable/goal_1" />
 
+    <Button
+        android:id="@+id/startapp"
+        android:layout_width="153dp"
+        android:layout_height="58dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="130dp"
+        android:layout_marginTop="335dp"
+        android:layout_marginEnd="130dp"
+        android:layout_marginBottom="335dp"
+        android:backgroundTint="@color/lagoon_2"
+        android:text="@string/start" />
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/meme_recycler_view"
         android:layout_width="match_parent"
@@ -30,10 +45,10 @@
         android:layout_alignParentStart="true"
         android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
-        android:layout_marginStart="0dp"
-        android:layout_marginTop="3dp"
-        android:layout_marginEnd="0dp"
-        android:layout_marginBottom="0dp"
+        android:layout_marginStart="-3dp"
+        android:layout_marginTop="-1dp"
+        android:layout_marginEnd="3dp"
+        android:layout_marginBottom="4dp"
         tools:listitem="@layout/meme_item" />
 
 </RelativeLayout>
