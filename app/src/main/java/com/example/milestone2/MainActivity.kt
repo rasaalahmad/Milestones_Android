@@ -25,14 +25,15 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import java.lang.reflect.Type
+import androidx.lifecycle.lifecycleScope
 
 
 class MainActivity : AppCompatActivity() {
     lateinit var memesList: Data
-    lateinit var adapter:MemeViewAdapter
+    var adapter: MemeViewAdapter? = null
     private val gson:Gson = Gson()
-    //lateinit var memestr:ArrayList<Meme>
-    val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "milestone")
+    private var memeArray:ArrayList<Meme> = ArrayList()
+    private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "milestone")
 
     private val memeDatafromAPI = stringPreferencesKey("memes_data_from_api")
 
@@ -43,18 +44,24 @@ class MainActivity : AppCompatActivity() {
         val rView:RecyclerView = findViewById(R.id.meme_recycler_view)
         rView.layoutManager = LinearLayoutManager(this)
 
-        val sharedPreferences = getSharedPreferences("MileStone", MODE_PRIVATE)
+        lifecycleScope.launch{
+            getAll().collect{
+                it.forEach{meme ->
+                    memeArray.add(meme)
+                }
 
-        runBlocking{
-            launch {
-                Log.d("DataStore Check: ", "I am here above if")
-                Log.d("DataStore Check: ", getAll().toString())
+                if(adapter==null)
+                {
+                    adapter = MemeViewAdapter(memeArray)
+                    // attaching it with recycler view adapter
+                    rView.adapter = adapter
+                    Log.d("Flow collect in scope", memeArray.toString())
+                }
+
             }
         }
 
-        val json = sharedPreferences.getString("Set","")
-
-        if(json!!.isEmpty())
+        if(adapter==null)
         {
             // calling get method from api
             val call: Call<MemeData> = MemeAPI.getInstance().create(MemeAPIEndpointInterface::class.java).getMemeData()
@@ -74,28 +81,10 @@ class MainActivity : AppCompatActivity() {
 
                         runBlocking{
                             launch {
-                                Log.d("DataStore Check: ", "I am here")
+                                Log.d("Flow collect api Call:", "I am here too")
                                 storeDataframeAPI()
                             }
                         }
-
-                        // Creating an Editor object to edit(write to the file)
-                        val editor = sharedPreferences.edit()
-
-
-                        val json = gson.toJson(memesList.memes!!)
-                        editor.putString("Set", json );
-                        //Log.d("APP CHECK", json.toString())
-                        // Storing the key and its value as the data fetched from edittext
-
-                        // Once the changes have been made,
-                        // we need to commit to apply those changes made,
-                        // otherwise, it will throw an error
-
-                        // Once the changes have been made,
-                        // we need to commit to apply those changes made,
-                        // otherwise, it will throw an error
-                        editor.apply()
                     }
                     else
                     {
@@ -109,21 +98,12 @@ class MainActivity : AppCompatActivity() {
                 }
             })
         }
-        else
-        {
-            val type: Type = object : TypeToken<ArrayList<Meme?>?>() {}.type
-            val memes:ArrayList<Meme>? = gson.fromJson(json, type)
-            //Log.d("APP CHECK 2", memes!!.toString())
 
-            adapter = MemeViewAdapter(memes!!)
-            // attaching it with recycler view adapter
-            rView.adapter = adapter
-        }
     }
 
     suspend fun storeDataframeAPI(){
         dataStore.edit { preferences ->
-            val gson:Gson = Gson()
+            val gson = Gson()
             val json = gson.toJson(memesList.memes!!)
             preferences[memeDatafromAPI] = json
         }
@@ -134,8 +114,7 @@ class MainActivity : AppCompatActivity() {
             val jsonString = preferences[memeDatafromAPI] ?: "[]"
             val type: Type = object : TypeToken<ArrayList<Meme?>?>() {}.type
             val memes:ArrayList<Meme>? = gson.fromJson(jsonString, type)
-            Log.d("DataStore Check first: ", memes!!.toString())
-            memes
+            memes!!
         }
     }
 }

@@ -51,4 +51,9 @@ dependencies {
     implementation "androidx.datastore:datastore-preferences-rxjava2:1.0.0"
     // optional - RxJava3 support
     implementation "androidx.datastore:datastore-preferences-rxjava3:1.0.0"
+
+    implementation 'androidx.lifecycle:lifecycle-extensions:2.2.0'
+
+
+    implementation 'androidx.lifecycle:lifecycle-runtime-ktx:2.3.1'
 }
