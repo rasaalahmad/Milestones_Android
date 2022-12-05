@@ -28,12 +28,14 @@ import retrofit2.Callback
 import retrofit2.Response
 import java.lang.reflect.Type
 import androidx.lifecycle.lifecycleScope
-
+import com.example.milestone2.adaptars.MemeViewAdapter
+import com.example.milestone2.api.MemeAPI
+import com.example.milestone2.api.MemeAPIEndpointInterface
 
 
 class MainActivity : AppCompatActivity() {
     lateinit var memesList: Data
-    lateinit var adapter:MemeViewAdapter
+    lateinit var adapter: MemeViewAdapter
     private val gson:Gson = Gson()
     private var memeArray:ArrayList<Meme> = ArrayList()
     private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "milestone")
@@ -67,45 +69,12 @@ class MainActivity : AppCompatActivity() {
 
         startBtn.setOnClickListener {
             startBtn.visibility = View.GONE
-            // calling get method from api
-            val call: Call<MemeData> = MemeAPI.getInstance().create(MemeAPIEndpointInterface::class.java).getMemeData()
-            // Asynchronously send the request and notify callback of its response
-            // or if an error occurred talking to the server, creating the request, or processing the response.
-            call.enqueue(object : Callback<MemeData> {
-                override fun onResponse(
-                    call: Call<MemeData>,
-                    response: Response<MemeData>
-                ) {
-                    if (response.isSuccessful) {
-                        memesList = response.body()?.data!!
-                        // adding list to the custom meme adapter
-                        adapter = memesList.memes?.let { MemeViewAdapter(it) }!!
-                        // attaching it with recycler view adapter
-                        rView.adapter = adapter
-                        runBlocking{
-                            launch {
-                                //Log.d("DataStore Check: ", "I am here")
-                                //Log.d("Flow collect api Call:", "I am here too")
-                                storeDataframeAPI()
-                            }
-                        }
-                    }
-                    else
-                    {
-                        //Log.d("Test: ", "Not successfully")
-                        Toast.makeText(applicationContext, "Connection Error, Please try again later", Toast.LENGTH_LONG).show()
-                    }
-                }
-
-                override fun onFailure(call: Call<MemeData>, t: Throwable) {
-                    Toast.makeText(applicationContext, "Connection Error, Please try again later", Toast.LENGTH_LONG).show()
-                }
-            })
+            apiCallAndResponse(rView)
         }
     }
 
 
-    suspend fun storeDataframeAPI(){
+    suspend fun storeDatafromAPI(){
         dataStore.edit { preferences ->
             val gson = Gson()
             val json = gson.toJson(memesList.memes!!)
@@ -120,5 +89,40 @@ class MainActivity : AppCompatActivity() {
             val memes:ArrayList<Meme>? = gson.fromJson(jsonString, type)
             memes!!
         }
+    }
+
+    private fun apiCallAndResponse(rView:RecyclerView)
+    {
+        // calling get method from api
+        val call: Call<MemeData> = MemeAPI.getInstance().create(MemeAPIEndpointInterface::class.java).getMemeData()
+        // Asynchronously send the request and notify callback of its response
+        // or if an error occurred talking to the server, creating the request, or processing the response.
+        call.enqueue(object : Callback<MemeData> {
+            override fun onResponse(
+                call: Call<MemeData>,
+                response: Response<MemeData>
+            ) {
+                if (response.isSuccessful) {
+                    memesList = response.body()?.data!!
+                    // adding list to the custom meme adapter
+                    adapter = memesList.memes?.let { MemeViewAdapter(it) }!!
+                    // attaching it with recycler view adapter
+                    rView.adapter = adapter
+
+                    runBlocking{
+                        storeDatafromAPI()
+                    }
+                }
+                else
+                {
+                    //Log.d("Test: ", "Not successfully")
+                    Toast.makeText(applicationContext, "Connection Error, Please try again later", Toast.LENGTH_LONG).show()
+                }
+            }
+
+            override fun onFailure(call: Call<MemeData>, t: Throwable) {
+                Toast.makeText(applicationContext, "Connection Error, Please try again later", Toast.LENGTH_LONG).show()
+            }
+        })
     }
 }
