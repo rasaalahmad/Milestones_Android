@@ -1,4 +1,4 @@
-package com.example.milestone2
+package com.example.milestone2.adaptars
 
 import android.view.LayoutInflater
 import android.view.View
@@ -6,6 +6,7 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.example.milestone2.R
 import com.example.milestone2.memeclasses.Meme
 import com.squareup.picasso.Picasso
 
