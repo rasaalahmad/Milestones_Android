@@ -75,7 +75,9 @@
         app:layout_constraintRight_toRightOf="@id/login_asset_rect1"
         app:layout_constraintStart_toStartOf="@id/login_asset_rect1"
         app:layout_constraintTop_toTopOf="@id/login_asset_rect1"
-        app:layout_constraintVertical_bias="0.2" />
+        app:layout_constraintVertical_bias="0.2"
+        android:drawableStart="@drawable/username_icon"
+        android:drawablePadding="10dp"/>
 
     <EditText
         android:id="@+id/password"
@@ -86,8 +88,60 @@
         app:layout_constraintRight_toRightOf="@id/login_asset_rect1"
         app:layout_constraintStart_toStartOf="@id/login_asset_rect1"
         app:layout_constraintTop_toBottomOf="@id/username"
-        app:layout_constraintVertical_bias="0.2" />
+        app:layout_constraintVertical_bias="0.2"
+        android:drawableStart="@drawable/password_icon"
+        android:drawablePadding="10dp" />
 
 
+    <ImageButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:src="@drawable/login_icon2"
+        app:layout_constraintBottom_toBottomOf="@id/login_asset_rect1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0"
+        app:layout_constraintStart_toEndOf="@id/username"
+        app:layout_constraintTop_toTopOf="@id/login_asset_rect1" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:backgroundTint="@color/white"
+        android:shadowColor="@color/white"
+        android:text="@string/forgot"
+        android:textColor="@color/black"
+        android:textSize="26sp"
+        app:layout_constraintBottom_toTopOf="@id/login_asset_rect2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.8"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/login_asset_rect1" />
+
+
+    <TextView
+        android:id="@+id/register_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/register"
+        android:backgroundTint="@color/white"
+        android:textColor="@color/black"
+        android:textSize="24sp"
+        app:layout_constraintBottom_toBottomOf="@id/login_asset_rect2"
+        app:layout_constraintTop_toTopOf="@id/login_asset_rect2"
+        app:layout_constraintRight_toRightOf="@id/login_asset_rect2"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintHorizontal_bias="0.2"/>
+
+    <ImageButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/login_icon4"
+        android:backgroundTint="@color/white"
+        app:layout_constraintStart_toEndOf="@id/register_text"
+        app:layout_constraintTop_toTopOf="@id/login_asset_rect2"
+        app:layout_constraintBottom_toBottomOf="@id/login_asset_rect2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
