@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".LoginActivity1">
+
+    <ImageView
+        android:id="@+id/sidebar_above"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:src="@drawable/sidebar_vector"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constrainedWidth="true"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintRight_toLeftOf="parent"
+        android:contentDescription="@string/sidebar_design" />
+
+    <ImageView
+        android:id="@+id/sidebar_bottom"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="55dp"
+        android:src="@drawable/sidebar_vector2"
+        app:layout_constrainedWidth="true"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:contentDescription="@string/sidebar_design" />
+
+    <TextView
+        android:id="@+id/login_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="@string/login"
+        android:textSize="40sp"
+        app:layout_constraintBottom_toTopOf="@id/sidebar_bottom"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintVertical_bias="0.3" />
+
+    <ImageView
+        android:id="@+id/login_asset_rect1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:contentDescription="@string/login_asset"
+        android:src="@drawable/rectangle1"
+        app:layout_constraintBottom_toTopOf="@id/sidebar_bottom"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/sidebar_above"
+        app:layout_constraintVertical_bias="0.2"
+        tools:ignore="ImageContrastCheck" />
+
+    <ImageView
+        android:id="@+id/login_asset_rect2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:contentDescription="@string/login_asset"
+        android:src="@drawable/rectangle2"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/login_asset_rect1"
+        app:layout_constraintVertical_bias="0.3"
+        tools:ignore="ImageContrastCheck" />
+
+    <EditText
+        android:id="@+id/username"
+        android:layout_width="280dp"
+        android:layout_height="wrap_content"
+        android:hint="@string/username"
+        app:layout_constraintBottom_toBottomOf="@id/password"
+        app:layout_constraintRight_toRightOf="@id/login_asset_rect1"
+        app:layout_constraintStart_toStartOf="@id/login_asset_rect1"
+        app:layout_constraintTop_toTopOf="@id/login_asset_rect1"
+        app:layout_constraintVertical_bias="0.2"
+        android:drawableStart="@drawable/username_icon"
+        android:drawablePadding="10dp"/>
+
+    <EditText
+        android:id="@+id/password"
+        android:layout_width="280dp"
+        android:layout_height="wrap_content"
+        android:hint="@string/password"
+        app:layout_constraintBottom_toBottomOf="@id/login_asset_rect1"
+        app:layout_constraintRight_toRightOf="@id/login_asset_rect1"
+        app:layout_constraintStart_toStartOf="@id/login_asset_rect1"
+        app:layout_constraintTop_toBottomOf="@id/username"
+        app:layout_constraintVertical_bias="0.2"
+        android:drawableStart="@drawable/password_icon"
+        android:drawablePadding="10dp" />
+
+
+    <ImageButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:src="@drawable/login_icon2"
+        app:layout_constraintBottom_toBottomOf="@id/login_asset_rect1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0"
+        app:layout_constraintStart_toEndOf="@id/username"
+        app:layout_constraintTop_toTopOf="@id/login_asset_rect1" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:backgroundTint="@color/white"
+        android:shadowColor="@color/white"
+        android:text="@string/forgot"
+        android:textColor="@color/black"
+        android:textSize="26sp"
+        app:layout_constraintBottom_toTopOf="@id/login_asset_rect2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.8"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/login_asset_rect1" />
+
+
+    <TextView
+        android:id="@+id/register_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/register"
+        android:backgroundTint="@color/white"
+        android:textColor="@color/black"
+        android:textSize="24sp"
+        app:layout_constraintBottom_toBottomOf="@id/login_asset_rect2"
+        app:layout_constraintTop_toTopOf="@id/login_asset_rect2"
+        app:layout_constraintRight_toRightOf="@id/login_asset_rect2"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintHorizontal_bias="0.2"/>
+
+    <ImageButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/login_icon4"
+        android:backgroundTint="@color/white"
+        app:layout_constraintStart_toEndOf="@id/register_text"
+        app:layout_constraintTop_toTopOf="@id/login_asset_rect2"
+        app:layout_constraintBottom_toBottomOf="@id/login_asset_rect2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
