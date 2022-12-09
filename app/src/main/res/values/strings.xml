@@ -12,4 +12,9 @@
     <string name="password">Password</string>
     <string name="forgot">Forgot?</string>
     <string name="register">Register</string>
+    <string name="come_back_with_your_id">Come back with your ID</string>
+    <string name="forget_password">Forget Password?</string>
+    <string name="or">OR</string>
+    <string name="not_a_member_sign_up">Not a member? <font color='#01C6DB'> Sign up</font> </string>
+    <string name="sign_up">Sign up</string>
 </resources>
