@@ -4,4 +4,26 @@
     <string name="meme_name_">Meme Name</string>
     <string name="meme_from_api">Meme from API</string>
     <string name="background_image">Background Image</string>
+
+    <string name="start">Start</string>
+    <string name="sidebar_design">Sidebar Design</string>
+    <string name="login">Login</string>
+    <string name="login_asset">Login_asset</string>
+    <string name="username">Username</string>
+    <string name="password">Password</string>
+    <string name="forgot">Forgot?</string>
+    <string name="register">Register</string>
+    <string name="come_back_with_your_id">Come back with your ID</string>
+    <string name="forget_password">Forget Password?</string>
+    <string name="or">OR</string>
+    <string name="not_a_member_sign_up">Not a member? <font color='#01C6DB'> Sign up</font> </string>
+    <string name="sign_up">Sign up</string>
+    <string name="person_name">Person Name</string>
+    <string name="sample_number">+923---------</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="create_contact">Create Contact</string>
+    <string name="save">Save</string>
+    <string name="full_name">Full Name</string>
+    <string name="phone_number">Phone Number</string>
 </resources>

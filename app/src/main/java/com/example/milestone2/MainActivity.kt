@@ -1,17 +1,18 @@
 package com.example.milestone2
 
 import android.os.Bundle
-import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.milestone2.memeclasses.Data
-import com.example.milestone2.memeclasses.Meme
-import com.example.milestone2.memeclasses.MemeData
+import com.example.milestone2.adapters.MemeViewAdapter
+import com.example.milestone2.api_resources.MemeAPI
+import com.example.milestone2.api_resources.MemeAPIEndpointInterface
+import com.example.milestone2.data_classes.Data
+import com.example.milestone2.data_classes.Meme
+import com.example.milestone2.data_classes.MemeData
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
-import org.json.JSONObject
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -20,7 +21,7 @@ import java.lang.reflect.Type
 
 class MainActivity : AppCompatActivity() {
     lateinit var memesList: Data
-    lateinit var adapter:MemeViewAdapter
+    lateinit var adapter: MemeViewAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

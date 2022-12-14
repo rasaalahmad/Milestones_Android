@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/title_bar_card_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:cardPreventCornerOverlap="true"
+        app:cardUseCompatPadding="true"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0">
+
+        <ImageButton
+            android:id="@+id/close_add_fragment"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:src="@drawable/back_icon_48px" />
+
+        <TextView
+            android:id="@+id/create_contact_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginStart="15dp"
+            android:text="@string/create_contact"
+            android:textColor="@color/black"
+            android:textSize="28sp" />
+
+    </androidx.cardview.widget.CardView>
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/contact_details_card_view"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        app:layout_constraintTop_toBottomOf="@id/title_bar_card_view"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintVertical_bias="0.15"
+        app:cardUseCompatPadding="true"
+        app:cardPreventCornerOverlap="true">
+
+        <ImageView
+            android:id="@+id/create_user_icon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/user_icon_48px"
+            android:layout_marginStart="15dp"/>
+
+        <EditText
+            android:id="@+id/full_name"
+            android:layout_width="300dp"
+            android:layout_height="50dp"
+            android:layout_marginEnd="20dp"
+            android:hint="@string/full_name"
+            android:paddingStart="20dp"
+            android:paddingEnd="10dp"
+            android:textSize="22sp"
+            android:layout_marginStart="50dp"
+            android:layout_gravity="top|center"
+            android:background="@drawable/edit_text_view3"/>
+
+        <ImageView
+            android:id="@+id/call_icon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/call_phone_icon_48px"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="70dp"/>
+
+        <EditText
+            android:id="@+id/contact_number"
+            android:layout_width="300dp"
+            android:layout_height="50dp"
+            android:layout_marginEnd="20dp"
+            android:hint="@string/phone_number"
+            android:paddingStart="20dp"
+            android:paddingEnd="10dp"
+            android:textSize="22sp"
+            android:layout_gravity="top|center"
+            android:layout_marginTop="70dp"
+            android:layout_marginStart="50dp"
+            android:background="@drawable/edit_text_view3"/>
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/save_contact_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/button_view2"
+            android:text="@string/save"
+            android:textColor="@color/white"
+            android:layout_gravity="bottom|center"/>
+
+
+    </androidx.cardview.widget.CardView>
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
