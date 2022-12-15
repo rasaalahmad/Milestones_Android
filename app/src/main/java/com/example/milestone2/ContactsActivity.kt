@@ -17,26 +17,16 @@ class ContactsActivity : AppCompatActivity() {
     private val contactMainFragment = ContactsMain()
     private val addContact = AddContact()
 
-
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_contacts)
 
         addContactbtn = findViewById(R.id.add_contact_btn)
-
-        val db = Room.databaseBuilder(
-            applicationContext,
-            AppDatabase::class.java, "Contacts_App"
-        ).build()
-
-
         loadFragment(contactMainFragment)
 
         addContactbtn.setOnClickListener{
             loadFragment(addContact)
         }
-
     }
 
     override fun onBackPressed() {
