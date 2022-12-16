@@ -1,12 +1,14 @@
 package com.example.milestone2.room_database
 
+import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.Query
 import com.example.milestone2.data_classes.Contacts
 
+@Dao
 interface ContactDao {
     @Query("SELECT * FROM contacts")
-    fun getAll():List<Contacts>
+    suspend fun getAll():List<Contacts>
     @Insert
-    fun insert(vararg contact:Contacts)
+    suspend fun insert(vararg contact:Contacts)
 }

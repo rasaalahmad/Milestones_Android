@@ -2,6 +2,7 @@ package com.example.milestone2.room_database
 
 import android.app.Application
 import com.example.milestone2.data_classes.Contacts
+import kotlinx.coroutines.runBlocking
 
 class ContactDatabaseClient (application: Application) {
 
@@ -11,7 +12,9 @@ class ContactDatabaseClient (application: Application) {
 
     init {
         contactDao = database.contactDao()
-        allContacts = contactDao.getAll()
+        runBlocking{
+            allContacts = contactDao.getAll()
+        }
     }
 
     fun insert(contacts: Contacts) {
@@ -19,7 +22,7 @@ class ContactDatabaseClient (application: Application) {
 //            .subscribeOn(Schedulers.io())
 //            .observeOn(AndroidSchedulers.mainThread())
 //            .subscribe()
-        contactDao.insert(contacts)
+        runBlocking { contactDao.insert(contacts) }
     }
 
    /* fun update(note: Note) {
