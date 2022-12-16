@@ -8,6 +8,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageButton
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.fragment.app.FragmentTransaction
@@ -23,6 +24,7 @@ class ContactsMain:Fragment(R.layout.fragment_contacts_main) {
     lateinit var contactViewModel: ContactViewModel
     lateinit var  contactsAdapter: ContactsRecyclerViewAdapter
     private val addContact = AddContact()
+    private lateinit var rView:RecyclerView
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -32,7 +34,7 @@ class ContactsMain:Fragment(R.layout.fragment_contacts_main) {
         fragment_view = inflater.inflate(R.layout.fragment_contacts_main, container, false)
 
         addContactbtn = fragment_view.findViewById(R.id.add_contact_btn)
-        val rView:RecyclerView = fragment_view.findViewById(R.id.contacts_recycler_view)
+        rView = fragment_view.findViewById(R.id.contacts_recycler_view)
         rView.layoutManager = LinearLayoutManager(context)
 
         contactsAdapter = ContactsRecyclerViewAdapter(contactViewModel.getAllContacts())
@@ -40,17 +42,18 @@ class ContactsMain:Fragment(R.layout.fragment_contacts_main) {
 
         addContactbtn.setOnClickListener{
             Log.d("Test click","I am here")
-            loadFragment(addContact)
+            addContact.show(requireActivity().supportFragmentManager,"CreateNewContact")
             addContact.contactViewModel = contactViewModel
         }
 
         return fragment_view
     }
 
-    private fun loadFragment(fragment: Fragment) {
-        val ft: FragmentTransaction = requireActivity().supportFragmentManager.beginTransaction()
-        ft.add(R.id.contacts_main_frame_layout,fragment)
-        ft.commit()
+    override fun onResume() {
+        super.onResume()
+        contactsAdapter = ContactsRecyclerViewAdapter(contactViewModel.getAllContacts())
+        rView.adapter = contactsAdapter
     }
+
 
 }

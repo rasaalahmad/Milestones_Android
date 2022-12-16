@@ -9,6 +9,7 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
 import androidx.appcompat.widget.AppCompatImageButton
+import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
 import androidx.lifecycle.ViewModelProvider
@@ -16,7 +17,7 @@ import androidx.lifecycle.ViewModelProviders
 import com.example.milestone2.R
 import com.example.milestone2.data_classes.Contacts
 
-class AddContact:Fragment() {
+class AddContact:DialogFragment() {
     private lateinit var fragment_view: View
     private lateinit var savebtn:Button
     private lateinit var closeBtn: AppCompatImageButton
@@ -31,6 +32,7 @@ class AddContact:Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         fragment_view = inflater.inflate(R.layout.fragment_add_contact, container, false)
+
         savebtn = fragment_view.findViewById(R.id.save_contact_btn)
         personName = fragment_view.findViewById(R.id.full_name)
         phoneNumber = fragment_view.findViewById(R.id.contact_number)
@@ -40,6 +42,7 @@ class AddContact:Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        dialog?.window?.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
         buttonListeners()
     }
 
