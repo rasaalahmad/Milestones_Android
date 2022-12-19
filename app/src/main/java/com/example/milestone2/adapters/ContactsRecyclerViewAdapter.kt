@@ -17,8 +17,6 @@ class ContactsRecyclerViewAdapter(private val contactsList: List<Contacts>
                                 , private var optionsMenuClickListener: OptionsMenuClickListener):
                                 RecyclerView.Adapter<ContactsRecyclerViewAdapter.ViewHolder>() {
 
-    // create an interface for onClickListener
-    // so that we can handle data most effectively in MainActivity.kt
     interface OptionsMenuClickListener {
         fun onOptionsMenuClicked(position: Int)
     }
@@ -58,18 +56,12 @@ class ContactsRecyclerViewAdapter(private val contactsList: List<Contacts>
         init {
             callbtn.setOnClickListener{
                 val intent = Intent(Intent.ACTION_DIAL, Uri.parse("tel:" + Uri.encode(contactNumber.text.toString())))
-                //val tv:TextView = findViewById(R.id.tv_number)
                 intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
-
-                //Log.d("Tag", "textview: ${tv_number.text.toString()}")
                 ItemView.context.startActivity(intent)
             }
             msgbtn.setOnClickListener {
                 val intent = Intent(Intent.ACTION_VIEW, Uri.parse("sms:" + Uri.encode(contactNumber.text.toString())))
-                //val tv:TextView = findViewById(R.id.tv_number)
                 intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
-
-                //Log.d("Tag", "textview: ${tv_number.text.toString()}")
                 ItemView.context.startActivity(intent)
             }
 

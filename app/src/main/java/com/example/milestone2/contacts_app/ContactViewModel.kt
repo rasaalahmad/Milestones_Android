@@ -17,15 +17,9 @@ class ContactViewModel(app: Application) : AndroidViewModel(app) {
         repository.delete(contact)
     }
 
-   /* fun update(note: Note) {
-        repository.update(note)
+    suspend fun update(contacts: Contacts) {
+        repository.update(contacts)
     }
-
-
-
-    fun deleteAllNotes() {
-        repository.deleteAllNotes()
-    }*/
 
     fun getAllContacts(): List<Contacts> {
         return allNotes

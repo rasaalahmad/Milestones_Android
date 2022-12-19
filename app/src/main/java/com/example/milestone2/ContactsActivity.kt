@@ -1,19 +1,12 @@
 package com.example.milestone2
 
 import android.os.Bundle
-import android.util.Log
-import android.widget.ImageButton
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
 import androidx.lifecycle.ViewModelProvider
-import androidx.room.Room
-import com.example.milestone2.contacts_app.AddContact
 import com.example.milestone2.contacts_app.ContactViewModel
 import com.example.milestone2.contacts_app.ContactsMain
-import com.example.milestone2.data_classes.Contacts
-import com.example.milestone2.room_database.AppDatabase
 
 
 class ContactsActivity : AppCompatActivity() {

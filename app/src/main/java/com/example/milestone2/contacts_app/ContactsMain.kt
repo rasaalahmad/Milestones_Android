@@ -11,6 +11,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageButton
 import android.widget.PopupMenu
+import android.widget.Toast
 import androidx.core.view.get
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -20,13 +21,12 @@ import com.example.milestone2.adapters.ContactsRecyclerViewAdapter
 import com.example.milestone2.data_classes.ContactsObject
 import kotlinx.coroutines.runBlocking
 
-
 class ContactsMain:Fragment(R.layout.fragment_contacts_main) {
     private lateinit var addContactbtn: ImageButton
-    private lateinit var fragment_view: View
+    private lateinit var fragmentView: View
     lateinit var contactViewModel: ContactViewModel
     lateinit var  contactsAdapter: ContactsRecyclerViewAdapter
-    private val addContact = AddContact()
+    private val addAndModifyContact = AddAndModifyContact()
     private lateinit var rView:RecyclerView
 
     override fun onCreateView(
@@ -34,14 +34,14 @@ class ContactsMain:Fragment(R.layout.fragment_contacts_main) {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        fragment_view = inflater.inflate(R.layout.fragment_contacts_main, container, false)
+        fragmentView = inflater.inflate(R.layout.fragment_contacts_main, container, false)
 
-        addContactbtn = fragment_view.findViewById(R.id.add_contact_btn)
-        rView = fragment_view.findViewById(R.id.contacts_recycler_view)
+        addContactbtn = fragmentView.findViewById(R.id.add_contact_btn)
+        rView = fragmentView.findViewById(R.id.contacts_recycler_view)
         rView.layoutManager = LinearLayoutManager(context)
         listeners()
 
-        return fragment_view
+        return fragmentView
     }
 
     override fun onResume() {
@@ -70,14 +70,16 @@ class ContactsMain:Fragment(R.layout.fragment_contacts_main) {
         })
         rView.adapter = contactsAdapter
 
-        addContact.setOnDismissListener {
+        addAndModifyContact.setOnDismissListener {
             ContactsObject.allContacts = contactViewModel.getAllContacts()
         }
 
         addContactbtn.setOnClickListener{
-            Log.d("Test click","I am here")
-            addContact.show(requireActivity().supportFragmentManager,"CreateNewContact")
-            addContact.contactViewModel = contactViewModel
+            val bundle = Bundle()
+            bundle.putString("purpose", "Create")
+            addAndModifyContact.arguments = bundle
+            addAndModifyContact.show(requireActivity().supportFragmentManager,"CreateNewContact")
+            addAndModifyContact.contactViewModel = contactViewModel
         }
     }
 
@@ -99,6 +101,7 @@ class ContactsMain:Fragment(R.layout.fragment_contacts_main) {
                                 when (which) {
                                     DialogInterface.BUTTON_POSITIVE -> {
                                         deleteContact(position)
+                                        Toast.makeText(activity as Context , "Contact Deleted Successfully" , Toast.LENGTH_SHORT).show()
                                     }
                                     DialogInterface.BUTTON_NEGATIVE -> {
                                         dialog.cancel()
@@ -110,8 +113,7 @@ class ContactsMain:Fragment(R.layout.fragment_contacts_main) {
                         return true
                     }
                     R.id.update -> {
-                        // define
-                        //Toast.makeText(this@MainActivity , "Item 2 clicked" , Toast.LENGTH_SHORT).show()
+                        modifyContact(position)
                         return true
                     }
                 }
@@ -121,7 +123,7 @@ class ContactsMain:Fragment(R.layout.fragment_contacts_main) {
         popupMenu.show()
     }
 
-    fun alertDialogFun(dialogClickListener: DialogInterface.OnClickListener)
+    private fun alertDialogFun(dialogClickListener: DialogInterface.OnClickListener)
     {
 
         val builder: AlertDialog.Builder = AlertDialog.Builder(context)
@@ -129,7 +131,7 @@ class ContactsMain:Fragment(R.layout.fragment_contacts_main) {
             .setNegativeButton("No", dialogClickListener).show()
     }
 
-    fun deleteContact(position:Int)
+    private fun deleteContact(position:Int)
     {
         runBlocking {
             contactViewModel.delete(ContactsObject.allContacts[position])
@@ -145,4 +147,16 @@ class ContactsMain:Fragment(R.layout.fragment_contacts_main) {
         })
         rView.adapter = contactsAdapter
     }
+
+    private fun modifyContact(position: Int)
+    {
+        val bundle = Bundle()
+        bundle.putString("person_name", ContactsObject.allContacts[position].person_name)
+        bundle.putString("contact_number", ContactsObject.allContacts[position].contact_number)
+        bundle.putString("purpose", "Update")
+        addAndModifyContact.arguments = bundle
+        addAndModifyContact.show(requireActivity().supportFragmentManager,"CreateNewContact")
+        addAndModifyContact.contactViewModel = contactViewModel
+    }
+
 }

@@ -25,19 +25,10 @@ class ContactDatabaseClient (application: Application) {
         contactDao.delete(contacts)
     }
 
-   /* fun update(note: Note) {
-        subscribeOnBackground {
-            contactDao.update(note)
-        }
+    suspend fun update(contacts: Contacts) {
+        contactDao.update(contacts)
+
     }
-
-
-
-    fun deleteAllNotes() {
-        subscribeOnBackground {
-            contactDao.deleteAllNotes()
-        }
-    }*/
 
     fun getAllContacts(): List<Contacts> {
         return allContacts
