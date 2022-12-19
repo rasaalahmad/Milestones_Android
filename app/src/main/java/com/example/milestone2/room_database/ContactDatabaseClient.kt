@@ -18,11 +18,11 @@ class ContactDatabaseClient (application: Application) {
     }
 
     fun insert(contacts: Contacts) {
-//        Single.just(noteDao.insert(note))
-//            .subscribeOn(Schedulers.io())
-//            .observeOn(AndroidSchedulers.mainThread())
-//            .subscribe()
         runBlocking { contactDao.insert(contacts) }
+    }
+
+    suspend fun delete(contacts: Contacts) {
+        contactDao.delete(contacts)
     }
 
    /* fun update(note: Note) {
@@ -31,9 +31,7 @@ class ContactDatabaseClient (application: Application) {
         }
     }
 
-    fun delete(note: Note) {
-            contactDao.delete(note)
-    }
+
 
     fun deleteAllNotes() {
         subscribeOnBackground {

@@ -27,4 +27,6 @@
     <string name="full_name">Full Name</string>
     <string name="phone_number">Phone Number</string>
     <string name="contacts">Contacts</string>
+    <string name="edit">Edit</string>
+    <string name="delete">Delete</string>
 </resources>

@@ -1,21 +1,22 @@
 package com.example.milestone2.contacts_app
 
+import android.content.Context
+import android.content.DialogInterface
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
+import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
+import android.widget.PopupMenu
 import android.widget.Toast
 import androidx.appcompat.widget.AppCompatImageButton
 import androidx.fragment.app.DialogFragment
-import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentTransaction
-import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.ViewModelProviders
 import com.example.milestone2.R
 import com.example.milestone2.data_classes.Contacts
+import com.example.milestone2.data_classes.ContactsObject
 
 class AddContact:DialogFragment() {
     private lateinit var fragment_view: View
@@ -24,7 +25,7 @@ class AddContact:DialogFragment() {
     private lateinit var personName: EditText
     private lateinit var phoneNumber:EditText
     lateinit var contactViewModel: ContactViewModel
-
+    private var onDismissListener: DialogInterface.OnDismissListener? = null
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -85,4 +86,17 @@ class AddContact:DialogFragment() {
         }
         return true
     }
+
+    fun setOnDismissListener(onDismissListener: DialogInterface.OnDismissListener)
+    {
+        this.onDismissListener = onDismissListener
+    }
+
+    override fun onDismiss(dialog: DialogInterface) {
+        super.onDismiss(dialog)
+        if (onDismissListener != null) {
+            this.onDismissListener!!.onDismiss(dialog);
+        }
+    }
+
 }

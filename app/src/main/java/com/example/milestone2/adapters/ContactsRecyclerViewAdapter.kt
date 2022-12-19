@@ -1,14 +1,27 @@
 package com.example.milestone2.adapters
 
+import android.content.Intent
+import android.net.Uri
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageButton
+import android.widget.PopupMenu
 import android.widget.TextView
+import androidx.appcompat.view.menu.MenuView.ItemView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.milestone2.R
 import com.example.milestone2.data_classes.Contacts
 
-class ContactsRecyclerViewAdapter(private val contactsList: List<Contacts>): RecyclerView.Adapter<ContactsRecyclerViewAdapter.ViewHolder>() {
+class ContactsRecyclerViewAdapter(private val contactsList: List<Contacts>
+                                , private var optionsMenuClickListener: OptionsMenuClickListener):
+                                RecyclerView.Adapter<ContactsRecyclerViewAdapter.ViewHolder>() {
+
+    // create an interface for onClickListener
+    // so that we can handle data most effectively in MainActivity.kt
+    interface OptionsMenuClickListener {
+        fun onOptionsMenuClicked(position: Int)
+    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(parent.context)
@@ -17,9 +30,18 @@ class ContactsRecyclerViewAdapter(private val contactsList: List<Contacts>): Rec
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val contact:Contacts = contactsList[position]
-        holder.personName.text = contact.person_name
-        holder.contactNumber.text = contact.contact_number
+        with(holder)
+        {
+            with(contactsList[position]){
+                val contact:Contacts = contactsList[position]
+                holder.personName.text = contact.person_name
+                holder.contactNumber.text = contact.contact_number
+                itemView.setOnClickListener{
+                    optionsMenuClickListener.onOptionsMenuClicked(position)
+                }
+            }
+        }
+
     }
 
     override fun getItemCount(): Int {
@@ -31,5 +53,27 @@ class ContactsRecyclerViewAdapter(private val contactsList: List<Contacts>): Rec
     {
         var personName: TextView = itemView.findViewById(R.id.person_name)
         var contactNumber: TextView = itemView.findViewById(R.id.phone_number)
+        val callbtn:ImageButton = itemView.findViewById(R.id.call_button)
+        var msgbtn:ImageButton = itemView.findViewById(R.id.message_button)
+        init {
+            callbtn.setOnClickListener{
+                val intent = Intent(Intent.ACTION_DIAL, Uri.parse("tel:" + Uri.encode(contactNumber.text.toString())))
+                //val tv:TextView = findViewById(R.id.tv_number)
+                intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
+
+                //Log.d("Tag", "textview: ${tv_number.text.toString()}")
+                ItemView.context.startActivity(intent)
+            }
+            msgbtn.setOnClickListener {
+                val intent = Intent(Intent.ACTION_VIEW, Uri.parse("sms:" + Uri.encode(contactNumber.text.toString())))
+                //val tv:TextView = findViewById(R.id.tv_number)
+                intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
+
+                //Log.d("Tag", "textview: ${tv_number.text.toString()}")
+                ItemView.context.startActivity(intent)
+            }
+
+        }
+
     }
 }

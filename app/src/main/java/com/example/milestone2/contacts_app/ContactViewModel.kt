@@ -13,13 +13,15 @@ class ContactViewModel(app: Application) : AndroidViewModel(app) {
         repository.insert(contact)
     }
 
+    suspend fun delete(contact: Contacts) {
+        repository.delete(contact)
+    }
+
    /* fun update(note: Note) {
         repository.update(note)
     }
 
-    fun delete(note: Note) {
-        repository.delete(note)
-    }
+
 
     fun deleteAllNotes() {
         repository.deleteAllNotes()
