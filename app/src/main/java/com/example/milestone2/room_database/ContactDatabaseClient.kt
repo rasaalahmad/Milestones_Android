@@ -25,8 +25,8 @@ class ContactDatabaseClient (application: Application) {
         contactDao.delete(contacts)
     }
 
-    suspend fun update(contacts: Contacts) {
-        contactDao.update(contacts)
+    suspend fun updateContact(contacts: Contacts) {
+        contactDao.updateContact(contacts)
 
     }
 

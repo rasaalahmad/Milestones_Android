@@ -12,6 +12,8 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.widget.AppCompatImageButton
 import androidx.fragment.app.DialogFragment
+import androidx.fragment.app.FragmentActivity
+import androidx.lifecycle.ViewModelProviders
 import com.example.milestone2.R
 import com.example.milestone2.data_classes.Contacts
 import kotlinx.coroutines.runBlocking
@@ -38,19 +40,32 @@ class AddAndModifyContact:DialogFragment() {
         phoneNumber = fragmentView.findViewById(R.id.contact_number)
         closeBtn = fragmentView.findViewById(R.id.close_add_fragment)
         titleTextView = fragmentView.findViewById(R.id.create_contact_text)
+        contactViewModel = ViewModelProviders.of(activity as FragmentActivity)[ContactViewModel::class.java]
         return fragmentView
     }
 
-    @SuppressLint("SetTextI18n")
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         dialog?.window?.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
+        addUpdateCheck()
+    }
 
+    override fun onResume() {
+        super.onResume()
+        addUpdateCheck()
+    }
+
+    @SuppressLint("SetTextI18n")
+    private fun addUpdateCheck()
+    {
         val mArgs = arguments
         val purpose = mArgs!!.getString("purpose")
 
         if(purpose.equals("Create"))
         {
+            personName.setHint(R.string.full_name)
+            phoneNumber.setHint(R.string.phone_number)
             buttonListeners(false)
         }
         else{
@@ -79,8 +94,10 @@ class AddAndModifyContact:DialogFragment() {
                     ).show()
                 }
                 else{
+
                     runBlocking{
-                        contactViewModel.update(Contacts(personName.text.toString(),phoneNumber.text.toString()))
+                        contactViewModel.updateContact(Contacts(personName.text.toString(),phoneNumber.text.toString()))
+                        //Log.d("Update Check",contactViewModel.getAllContacts())
                     }
 
                     Toast.makeText(
@@ -93,6 +110,7 @@ class AddAndModifyContact:DialogFragment() {
 
                 val manager = requireActivity().supportFragmentManager
                 manager.beginTransaction().remove(this).commit()
+
             } else {
                 Toast.makeText(
                     fragmentView.context,

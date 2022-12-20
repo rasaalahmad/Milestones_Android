@@ -13,9 +13,15 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.milestone2.R
 import com.example.milestone2.data_classes.Contacts
 
-class ContactsRecyclerViewAdapter(private val contactsList: List<Contacts>
-                                , private var optionsMenuClickListener: OptionsMenuClickListener):
+class ContactsRecyclerViewAdapter( private var optionsMenuClickListener: OptionsMenuClickListener):
                                 RecyclerView.Adapter<ContactsRecyclerViewAdapter.ViewHolder>() {
+    lateinit var contactsList: List<Contacts>
+
+    fun setList(contacts: List<Contacts>)
+    {
+        contactsList = contacts
+    }
+
 
     interface OptionsMenuClickListener {
         fun onOptionsMenuClicked(position: Int)

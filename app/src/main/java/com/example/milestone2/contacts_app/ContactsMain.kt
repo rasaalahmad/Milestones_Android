@@ -4,7 +4,6 @@ import android.app.AlertDialog
 import android.content.Context
 import android.content.DialogInterface
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.MenuItem
 import android.view.View
@@ -14,11 +13,13 @@ import android.widget.PopupMenu
 import android.widget.Toast
 import androidx.core.view.get
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentActivity
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.milestone2.R
 import com.example.milestone2.adapters.ContactsRecyclerViewAdapter
-import com.example.milestone2.data_classes.ContactsObject
 import kotlinx.coroutines.runBlocking
 
 class ContactsMain:Fragment(R.layout.fragment_contacts_main) {
@@ -33,20 +34,20 @@ class ContactsMain:Fragment(R.layout.fragment_contacts_main) {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         fragmentView = inflater.inflate(R.layout.fragment_contacts_main, container, false)
 
         addContactbtn = fragmentView.findViewById(R.id.add_contact_btn)
         rView = fragmentView.findViewById(R.id.contacts_recycler_view)
         rView.layoutManager = LinearLayoutManager(context)
+        contactViewModel = ViewModelProviders.of(activity as FragmentActivity)[ContactViewModel::class.java]
         listeners()
-
         return fragmentView
     }
 
     override fun onResume() {
         super.onResume()
-        contactsAdapter = ContactsRecyclerViewAdapter(ContactsObject.allContacts, object : ContactsRecyclerViewAdapter.OptionsMenuClickListener{
+        contactsAdapter = ContactsRecyclerViewAdapter(object : ContactsRecyclerViewAdapter.OptionsMenuClickListener{
             // implement the required method
             override fun onOptionsMenuClicked(position: Int) {
                 // this method will handle the onclick options click
@@ -54,13 +55,21 @@ class ContactsMain:Fragment(R.layout.fragment_contacts_main) {
                 performOptionsMenuClick(position)
             }
         })
+        setListAdapter()
         rView.adapter = contactsAdapter
+    }
+
+    private fun setListAdapter()
+    {
+        contactViewModel.getAllContactsObserver().observe(activity as FragmentActivity,Observer{
+            contactsAdapter.setList(ArrayList(it))
+            contactsAdapter.notifyDataSetChanged()
+        })
     }
 
     private fun listeners()
     {
-        ContactsObject.allContacts = contactViewModel.getAllContacts()
-        contactsAdapter = ContactsRecyclerViewAdapter(ContactsObject.allContacts, object : ContactsRecyclerViewAdapter.OptionsMenuClickListener{
+        contactsAdapter = ContactsRecyclerViewAdapter(object : ContactsRecyclerViewAdapter.OptionsMenuClickListener{
             // implement the required method
             override fun onOptionsMenuClicked(position: Int) {
                 // this method will handle the onclick options click
@@ -68,10 +77,11 @@ class ContactsMain:Fragment(R.layout.fragment_contacts_main) {
                 performOptionsMenuClick(position)
             }
         })
+        setListAdapter()
         rView.adapter = contactsAdapter
 
         addAndModifyContact.setOnDismissListener {
-            ContactsObject.allContacts = contactViewModel.getAllContacts()
+            setListAdapter()
         }
 
         addContactbtn.setOnClickListener{
@@ -79,7 +89,6 @@ class ContactsMain:Fragment(R.layout.fragment_contacts_main) {
             bundle.putString("purpose", "Create")
             addAndModifyContact.arguments = bundle
             addAndModifyContact.show(requireActivity().supportFragmentManager,"CreateNewContact")
-            addAndModifyContact.contactViewModel = contactViewModel
         }
     }
 
@@ -134,29 +143,21 @@ class ContactsMain:Fragment(R.layout.fragment_contacts_main) {
     private fun deleteContact(position:Int)
     {
         runBlocking {
-            contactViewModel.delete(ContactsObject.allContacts[position])
+            contactViewModel.delete(contactsAdapter.contactsList[position])
         }
-        ContactsObject.allContacts.drop(position)
-        contactsAdapter = ContactsRecyclerViewAdapter(ContactsObject.allContacts, object : ContactsRecyclerViewAdapter.OptionsMenuClickListener{
-            // implement the required method
-            override fun onOptionsMenuClicked(position: Int) {
-                // this method will handle the onclick options click
-                // it is defined below
-                performOptionsMenuClick(position)
-            }
-        })
+        contactsAdapter.contactsList.drop(position)
+        setListAdapter()
         rView.adapter = contactsAdapter
     }
 
     private fun modifyContact(position: Int)
     {
         val bundle = Bundle()
-        bundle.putString("person_name", ContactsObject.allContacts[position].person_name)
-        bundle.putString("contact_number", ContactsObject.allContacts[position].contact_number)
+        bundle.putString("person_name", contactsAdapter.contactsList[position].person_name)
+        bundle.putString("contact_number", contactsAdapter.contactsList[position].contact_number)
         bundle.putString("purpose", "Update")
         addAndModifyContact.arguments = bundle
         addAndModifyContact.show(requireActivity().supportFragmentManager,"CreateNewContact")
-        addAndModifyContact.contactViewModel = contactViewModel
     }
 
 }
