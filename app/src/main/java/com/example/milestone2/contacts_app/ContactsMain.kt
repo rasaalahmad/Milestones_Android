@@ -1,9 +1,12 @@
 package com.example.milestone2.contacts_app
 
+import android.annotation.SuppressLint
 import android.app.AlertDialog
 import android.content.Context
 import android.content.DialogInterface
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.view.LayoutInflater
 import android.view.MenuItem
 import android.view.View
@@ -14,13 +17,13 @@ import android.widget.Toast
 import androidx.core.view.get
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.milestone2.R
 import com.example.milestone2.adapters.ContactsRecyclerViewAdapter
 import kotlinx.coroutines.runBlocking
+
 
 class ContactsMain:Fragment(R.layout.fragment_contacts_main) {
     private lateinit var addContactbtn: ImageButton
@@ -41,45 +44,36 @@ class ContactsMain:Fragment(R.layout.fragment_contacts_main) {
         rView = fragmentView.findViewById(R.id.contacts_recycler_view)
         rView.layoutManager = LinearLayoutManager(context)
         contactViewModel = ViewModelProviders.of(activity as FragmentActivity)[ContactViewModel::class.java]
+        contactsAdapter = ContactsRecyclerViewAdapter(object : ContactsRecyclerViewAdapter.OptionsMenuClickListener{
+            // implement the required method
+            override fun onOptionsMenuClicked(position: Int) {
+                // this method will handle the onclick options click
+                // it is defined below
+                performOptionsMenuClick(position)
+            }
+        })
+        setListAdapter()
+        rView.adapter = contactsAdapter
         listeners()
         return fragmentView
     }
 
     override fun onResume() {
         super.onResume()
-        contactsAdapter = ContactsRecyclerViewAdapter(object : ContactsRecyclerViewAdapter.OptionsMenuClickListener{
-            // implement the required method
-            override fun onOptionsMenuClicked(position: Int) {
-                // this method will handle the onclick options click
-                // it is defined below
-                performOptionsMenuClick(position)
-            }
-        })
         setListAdapter()
-        rView.adapter = contactsAdapter
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     private fun setListAdapter()
     {
-        contactViewModel.getAllContactsObserver().observe(activity as FragmentActivity,Observer{
+        contactViewModel.getAllContactsObserver().observe(activity as FragmentActivity) {
             contactsAdapter.setList(ArrayList(it))
-            contactsAdapter.notifyDataSetChanged()
-        })
+        }
+        Handler(Looper.getMainLooper()).post { contactsAdapter.notifyDataSetChanged() }
     }
 
     private fun listeners()
     {
-        contactsAdapter = ContactsRecyclerViewAdapter(object : ContactsRecyclerViewAdapter.OptionsMenuClickListener{
-            // implement the required method
-            override fun onOptionsMenuClicked(position: Int) {
-                // this method will handle the onclick options click
-                // it is defined below
-                performOptionsMenuClick(position)
-            }
-        })
-        setListAdapter()
-        rView.adapter = contactsAdapter
-
         addAndModifyContact.setOnDismissListener {
             setListAdapter()
         }
@@ -89,6 +83,7 @@ class ContactsMain:Fragment(R.layout.fragment_contacts_main) {
             bundle.putBoolean("isUpdate", false)
             addAndModifyContact.arguments = bundle
             addAndModifyContact.show(requireActivity().supportFragmentManager,"CreateNewContact")
+            setListAdapter()
         }
     }
 
@@ -123,6 +118,7 @@ class ContactsMain:Fragment(R.layout.fragment_contacts_main) {
                     }
                     R.id.update -> {
                         modifyContact(position)
+                        setListAdapter()
                         return true
                     }
                 }
@@ -147,7 +143,6 @@ class ContactsMain:Fragment(R.layout.fragment_contacts_main) {
         }
         contactsAdapter.contactsList.drop(position)
         setListAdapter()
-        rView.adapter = contactsAdapter
     }
 
     private fun modifyContact(position: Int)

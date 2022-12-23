@@ -16,8 +16,7 @@ abstract class AppDatabase:RoomDatabase() {
 
         @Synchronized
         fun getInstance(ctx: Context): AppDatabase {
-            if(instance == null)
-                instance = Room.databaseBuilder(ctx.applicationContext, AppDatabase::class.java,
+            instance = Room.databaseBuilder(ctx.applicationContext, AppDatabase::class.java,
                     "Contacts_App")
                     .fallbackToDestructiveMigration()
                     .addCallback(roomCallback)
