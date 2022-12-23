@@ -11,7 +11,7 @@ class ContactViewModel(app: Application) : AndroidViewModel(app) {
     private val repository = ContactDatabaseClient(app)
     private val allNotes = repository.getAllContacts()
 
-    fun insert(contact: Contacts) {
+    suspend fun insert(contact: Contacts) {
         repository.insert(contact)
         getAllContacts()
     }

@@ -17,8 +17,8 @@ class ContactDatabaseClient (application: Application) {
         }
     }
 
-    fun insert(contacts: Contacts) {
-        runBlocking { contactDao.insert(contacts) }
+    suspend fun insert(contacts: Contacts) {
+         contactDao.insert(contacts)
     }
 
     suspend fun delete(contacts: Contacts) {

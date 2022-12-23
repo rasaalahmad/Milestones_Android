@@ -27,6 +27,7 @@ class AddAndModifyContact:DialogFragment() {
     private lateinit var titleTextView: TextView
     lateinit var contactViewModel: ContactViewModel
     private var onDismissListener: DialogInterface.OnDismissListener? = null
+    private var uid:Int = 0
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -60,16 +61,19 @@ class AddAndModifyContact:DialogFragment() {
     private fun addUpdateCheck()
     {
         val mArgs = arguments
-        val purpose = mArgs!!.getString("purpose")
+        val isUpdate = mArgs!!.getBoolean("isUpdate")
 
-        if(purpose.equals("Create"))
+        if(!isUpdate)
         {
+            personName.setText("")
+            phoneNumber.setText("")
             personName.setHint(R.string.full_name)
             phoneNumber.setHint(R.string.phone_number)
             buttonListeners(false)
         }
         else{
             titleTextView.text = "Update Contact"
+            uid = mArgs.getInt("uid")
             val person_name = mArgs.getString("person_name")
             val contact_number = mArgs.getString("contact_number")
             personName.setText(person_name)
@@ -78,15 +82,21 @@ class AddAndModifyContact:DialogFragment() {
         }
     }
 
-    private fun buttonListeners(purpose:Boolean) // 1 for modify 0 for create
+    private fun buttonListeners(isUpdate:Boolean) // 1 for modify 0 for create
     {
         savebtn.setOnClickListener {
             if (fieldCheck()) {
 
-                if(!purpose)
+                if(!isUpdate)
                 {
-                    contactViewModel.insert(Contacts(personName.text.toString(),phoneNumber.text.toString()))
-
+                    runBlocking {
+                        contactViewModel.insert(
+                            Contacts(
+                                personName.text.toString(),
+                                phoneNumber.text.toString()
+                            )
+                        )
+                    }
                     Toast.makeText(
                         fragmentView.context,
                         "Contact Added Successfully",
@@ -96,7 +106,9 @@ class AddAndModifyContact:DialogFragment() {
                 else{
 
                     runBlocking{
-                        contactViewModel.updateContact(Contacts(personName.text.toString(),phoneNumber.text.toString()))
+                        val contact:Contacts = Contacts(personName.text.toString(),phoneNumber.text.toString())
+                        contact.uid = uid
+                        contactViewModel.updateContact(contact)
                         //Log.d("Update Check",contactViewModel.getAllContacts())
                     }
 
