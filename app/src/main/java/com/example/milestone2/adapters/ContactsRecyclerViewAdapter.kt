@@ -1,7 +1,9 @@
 package com.example.milestone2.adapters
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.net.Uri
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -15,6 +17,7 @@ class ContactsRecyclerViewAdapter( private var optionsMenuClickListener: Options
                                 RecyclerView.Adapter<ContactsRecyclerViewAdapter.ViewHolder>() {
     lateinit var contactsList: ArrayList<Contacts>
 
+    @SuppressLint("NotifyDataSetChanged")
     fun setList(contacts: ArrayList<Contacts>)
     {
         contactsList = contacts
@@ -45,11 +48,11 @@ class ContactsRecyclerViewAdapter( private var optionsMenuClickListener: Options
     }
 
     override fun getItemCount(): Int {
-        return contactsList.count()
+        return contactsList.size
     }
 
     // view holder class that extends the Recycler view holder
-    class ViewHolder(ItemView: View) : RecyclerView.ViewHolder(ItemView)
+    inner class ViewHolder(ItemView: View) : RecyclerView.ViewHolder(ItemView)
     {
         var personName: TextView = itemView.findViewById(R.id.person_name)
         var contactNumber: TextView = itemView.findViewById(R.id.phone_number)

@@ -7,14 +7,10 @@ import kotlinx.coroutines.runBlocking
 class ContactDatabaseClient (application: Application) {
 
     private var contactDao: ContactDao
-    private var allContacts: List<Contacts>
     private val database = AppDatabase.getInstance(application)
 
     init {
         contactDao = database.contactDao()
-        runBlocking{
-            allContacts = contactDao.getAll()
-        }
     }
 
     suspend fun insert(contacts: Contacts) {
@@ -30,7 +26,7 @@ class ContactDatabaseClient (application: Application) {
 
     }
 
-    fun getAllContacts(): List<Contacts> {
-        return allContacts
+    suspend fun getAllContacts(): List<Contacts> {
+        return contactDao.getAll()
     }
 }

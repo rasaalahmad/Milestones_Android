@@ -7,6 +7,7 @@ import android.content.DialogInterface
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.MenuItem
 import android.view.View
@@ -66,8 +67,10 @@ class ContactsMain:Fragment(R.layout.fragment_contacts_main) {
     @SuppressLint("NotifyDataSetChanged")
     private fun setListAdapter()
     {
-        contactViewModel.getAllContactsObserver().observe(activity as FragmentActivity) {
-            contactsAdapter.setList(ArrayList(it))
+        runBlocking {
+            contactViewModel.getAllContactsObserver().observe(activity as FragmentActivity) {
+                contactsAdapter.setList(ArrayList(it))
+            }
             contactsAdapter.notifyDataSetChanged()
         }
     }
@@ -106,6 +109,7 @@ class ContactsMain:Fragment(R.layout.fragment_contacts_main) {
                                     DialogInterface.BUTTON_POSITIVE -> {
                                         deleteContact(position)
                                         Toast.makeText(activity as Context , "Contact Deleted Successfully" , Toast.LENGTH_SHORT).show()
+
                                     }
                                     DialogInterface.BUTTON_NEGATIVE -> {
                                         dialog.cancel()
@@ -113,7 +117,7 @@ class ContactsMain:Fragment(R.layout.fragment_contacts_main) {
                                 }
                             }
                         alertDialogFun(dialogClickListener)
-
+                        setListAdapter()
                         return true
                     }
                     R.id.update -> {
@@ -134,6 +138,7 @@ class ContactsMain:Fragment(R.layout.fragment_contacts_main) {
         val builder: AlertDialog.Builder = AlertDialog.Builder(context)
         builder.setMessage("Are you sure?").setPositiveButton("Yes", dialogClickListener)
             .setNegativeButton("No", dialogClickListener).show()
+        setListAdapter()
     }
 
     private fun deleteContact(position:Int)
@@ -141,7 +146,6 @@ class ContactsMain:Fragment(R.layout.fragment_contacts_main) {
         runBlocking {
             contactViewModel.delete(contactsAdapter.contactsList[position])
         }
-        contactsAdapter.contactsList.drop(position)
         setListAdapter()
     }
 
