@@ -13,9 +13,9 @@ import com.example.milestone2.data_classes.Contacts
 
 class ContactsRecyclerViewAdapter( private var optionsMenuClickListener: OptionsMenuClickListener):
                                 RecyclerView.Adapter<ContactsRecyclerViewAdapter.ViewHolder>() {
-    lateinit var contactsList: List<Contacts>
+    lateinit var contactsList: ArrayList<Contacts>
 
-    fun setList(contacts: List<Contacts>)
+    fun setList(contacts: ArrayList<Contacts>)
     {
         contactsList = contacts
     }
@@ -34,13 +34,11 @@ class ContactsRecyclerViewAdapter( private var optionsMenuClickListener: Options
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         with(holder)
         {
-            with(contactsList[position]){
-                val contact:Contacts = contactsList[position]
-                holder.personName.text = contact.person_name
-                holder.contactNumber.text = contact.contact_number
-                itemView.setOnClickListener{
-                    optionsMenuClickListener.onOptionsMenuClicked(position)
-                }
+            val contact:Contacts = contactsList[position]
+            holder.personName.text = contact.person_name
+            holder.contactNumber.text = contact.contact_number
+            itemView.setOnClickListener{
+                optionsMenuClickListener.onOptionsMenuClicked(position)
             }
         }
 

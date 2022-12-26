@@ -68,8 +68,8 @@ class ContactsMain:Fragment(R.layout.fragment_contacts_main) {
     {
         contactViewModel.getAllContactsObserver().observe(activity as FragmentActivity) {
             contactsAdapter.setList(ArrayList(it))
+            contactsAdapter.notifyDataSetChanged()
         }
-        Handler(Looper.getMainLooper()).post { contactsAdapter.notifyDataSetChanged() }
     }
 
     private fun listeners()
@@ -151,7 +151,6 @@ class ContactsMain:Fragment(R.layout.fragment_contacts_main) {
         bundle.putInt("uid",contactsAdapter.contactsList[position].uid)
         bundle.putString("person_name", contactsAdapter.contactsList[position].person_name)
         bundle.putString("contact_number", contactsAdapter.contactsList[position].contact_number)
-        bundle.putString("purpose", "Update")
         bundle.putBoolean("isUpdate", true)
         addAndModifyContact.arguments = bundle
         addAndModifyContact.show(requireActivity().supportFragmentManager,"CreateNewContact")
