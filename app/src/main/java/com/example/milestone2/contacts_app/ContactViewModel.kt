@@ -1,13 +1,15 @@
 package com.example.milestone2.contacts_app
 
 import android.app.Application
-import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import com.example.milestone2.data_classes.Contacts
 import com.example.milestone2.room_database.ContactDatabaseClient
+import javax.inject.Inject
+import dagger.hilt.android.lifecycle.HiltViewModel
 
-class ContactViewModel(app: Application) : AndroidViewModel(app) {
+@HiltViewModel
+class ContactViewModel @Inject constructor(app: Application) : AndroidViewModel(app) {
     var allContacts: MutableLiveData<List<Contacts>> = MutableLiveData()
     private val repository = ContactDatabaseClient(app)
 
@@ -18,7 +20,6 @@ class ContactViewModel(app: Application) : AndroidViewModel(app) {
 
     suspend fun delete(contact: Contacts) {
         repository.delete(contact)
-        Log.d("List", contact.toString())
         getAllContacts()
     }
 
@@ -34,5 +35,6 @@ class ContactViewModel(app: Application) : AndroidViewModel(app) {
 
     private suspend fun getAllContacts(){
         allContacts.postValue(repository.getAllContacts())
+        //Log.d("List size", repository.getAllContacts().size.toString())
     }
 }

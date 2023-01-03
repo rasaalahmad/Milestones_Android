@@ -18,14 +18,13 @@ import com.example.milestone2.R
 import com.example.milestone2.data_classes.Contacts
 import kotlinx.coroutines.runBlocking
 
-class AddAndModifyContact:DialogFragment() {
+class AddAndModifyContact(private val contactViewModel: ContactViewModel):DialogFragment() {
     private lateinit var fragmentView: View
     private lateinit var savebtn:Button
     private lateinit var closeBtn: AppCompatImageButton
     private lateinit var personName: EditText
     private lateinit var phoneNumber:EditText
     private lateinit var titleTextView: TextView
-    lateinit var contactViewModel: ContactViewModel
     private var onDismissListener: DialogInterface.OnDismissListener? = null
     private var uid:Int = 0
 
@@ -41,7 +40,6 @@ class AddAndModifyContact:DialogFragment() {
         phoneNumber = fragmentView.findViewById(R.id.contact_number)
         closeBtn = fragmentView.findViewById(R.id.close_add_fragment)
         titleTextView = fragmentView.findViewById(R.id.create_contact_text)
-        contactViewModel = ViewModelProviders.of(activity as FragmentActivity)[ContactViewModel::class.java]
         return fragmentView
     }
 

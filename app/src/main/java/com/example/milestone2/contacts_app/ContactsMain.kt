@@ -5,9 +5,6 @@ import android.app.AlertDialog
 import android.content.Context
 import android.content.DialogInterface
 import android.os.Bundle
-import android.os.Handler
-import android.os.Looper
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.MenuItem
 import android.view.View
@@ -18,7 +15,6 @@ import android.widget.Toast
 import androidx.core.view.get
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
-import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.milestone2.R
@@ -26,12 +22,11 @@ import com.example.milestone2.adapters.ContactsRecyclerViewAdapter
 import kotlinx.coroutines.runBlocking
 
 
-class ContactsMain:Fragment(R.layout.fragment_contacts_main) {
-    private lateinit var addContactbtn: ImageButton
+class ContactsMain(private val contactViewModel: ContactViewModel):Fragment(R.layout.fragment_contacts_main) {
+    private lateinit var addContactButton: ImageButton
     private lateinit var fragmentView: View
-    lateinit var contactViewModel: ContactViewModel
     lateinit var  contactsAdapter: ContactsRecyclerViewAdapter
-    private val addAndModifyContact = AddAndModifyContact()
+    private lateinit var addAndModifyContact:AddAndModifyContact
     private lateinit var rView:RecyclerView
 
     override fun onCreateView(
@@ -40,11 +35,10 @@ class ContactsMain:Fragment(R.layout.fragment_contacts_main) {
         savedInstanceState: Bundle?
     ): View {
         fragmentView = inflater.inflate(R.layout.fragment_contacts_main, container, false)
-
-        addContactbtn = fragmentView.findViewById(R.id.add_contact_btn)
+        addAndModifyContact = AddAndModifyContact(contactViewModel)
+        addContactButton = fragmentView.findViewById(R.id.add_contact_btn)
         rView = fragmentView.findViewById(R.id.contacts_recycler_view)
         rView.layoutManager = LinearLayoutManager(context)
-        contactViewModel = ViewModelProviders.of(activity as FragmentActivity)[ContactViewModel::class.java]
         contactsAdapter = ContactsRecyclerViewAdapter(object : ContactsRecyclerViewAdapter.OptionsMenuClickListener{
             // implement the required method
             override fun onOptionsMenuClicked(position: Int) {
@@ -81,7 +75,7 @@ class ContactsMain:Fragment(R.layout.fragment_contacts_main) {
             setListAdapter()
         }
 
-        addContactbtn.setOnClickListener{
+        addContactButton.setOnClickListener{
             val bundle = Bundle()
             bundle.putBoolean("isUpdate", false)
             addAndModifyContact.arguments = bundle
@@ -109,7 +103,7 @@ class ContactsMain:Fragment(R.layout.fragment_contacts_main) {
                                     DialogInterface.BUTTON_POSITIVE -> {
                                         deleteContact(position)
                                         Toast.makeText(activity as Context , "Contact Deleted Successfully" , Toast.LENGTH_SHORT).show()
-
+                                        setListAdapter()
                                     }
                                     DialogInterface.BUTTON_NEGATIVE -> {
                                         dialog.cancel()
@@ -117,7 +111,6 @@ class ContactsMain:Fragment(R.layout.fragment_contacts_main) {
                                 }
                             }
                         alertDialogFun(dialogClickListener)
-                        setListAdapter()
                         return true
                     }
                     R.id.update -> {
@@ -138,15 +131,14 @@ class ContactsMain:Fragment(R.layout.fragment_contacts_main) {
         val builder: AlertDialog.Builder = AlertDialog.Builder(context)
         builder.setMessage("Are you sure?").setPositiveButton("Yes", dialogClickListener)
             .setNegativeButton("No", dialogClickListener).show()
-        setListAdapter()
     }
 
     private fun deleteContact(position:Int)
     {
         runBlocking {
             contactViewModel.delete(contactsAdapter.contactsList[position])
+            setListAdapter()
         }
-        setListAdapter()
     }
 
     private fun modifyContact(position: Int)
