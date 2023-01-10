@@ -3,15 +3,10 @@ package com.example.milestone2.room_database
 import android.app.Application
 import com.example.milestone2.data_classes.Contacts
 import kotlinx.coroutines.runBlocking
+import javax.inject.Inject
 
-class ContactDatabaseClient (application: Application) {
-
-    private var contactDao: ContactDao
-    private val database = AppDatabase.getInstance(application)
-
-    init {
-        contactDao = database.contactDao()
-    }
+class ContactDatabaseClient @Inject
+                    constructor (private var contactDao: ContactDao) {
 
     suspend fun insert(contacts: Contacts) {
          contactDao.insert(contacts)
