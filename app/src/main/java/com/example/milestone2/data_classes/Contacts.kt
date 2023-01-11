@@ -11,4 +11,6 @@ class Contacts(
 {
     @PrimaryKey(autoGenerate = true)
     var uid: Int = 0
+
+    constructor() :this("","")
 }

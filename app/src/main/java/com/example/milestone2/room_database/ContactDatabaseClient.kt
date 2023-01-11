@@ -8,6 +8,11 @@ import javax.inject.Inject
 class ContactDatabaseClient @Inject
                     constructor (private var contactDao: ContactDao) {
 
+    suspend fun getContactByName(name:String):Contacts
+    {
+        return contactDao.getContactByName(name)
+    }
+
     suspend fun insert(contacts: Contacts) {
          contactDao.insert(contacts)
     }

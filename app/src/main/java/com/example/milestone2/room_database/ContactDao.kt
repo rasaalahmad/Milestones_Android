@@ -7,6 +7,8 @@ import com.example.milestone2.data_classes.Contacts
 interface ContactDao {
     @Query("SELECT * FROM contacts")
     suspend fun getAll():List<Contacts>
+    @Query("SELECT * FROM CONTACTS where person_name= :name")
+    suspend fun getContactByName(vararg name:String):Contacts
     @Insert
     suspend fun insert(vararg contact:Contacts)
     @Delete

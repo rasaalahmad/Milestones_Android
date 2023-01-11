@@ -39,6 +39,11 @@ class ContactViewModel @Inject
         return allContacts
     }
 
+    suspend fun getContactByName(name:String):Contacts
+    {
+        return repository.getContactByName(name)
+    }
+
     private suspend fun getAllContacts(){
         allContacts.postValue(repository.getAllContacts())
         //Log.d("List size", repository.getAllContacts().size.toString())
