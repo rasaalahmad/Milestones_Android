@@ -1,4 +1,4 @@
-package com.example.milestone2.contacts_app
+package com.example.milestone2.ui.home
 
 import android.annotation.SuppressLint
 import android.app.AlertDialog
@@ -15,29 +15,40 @@ import android.widget.Toast
 import androidx.core.view.get
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
+import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.milestone2.R
 import com.example.milestone2.adapters.ContactsRecyclerViewAdapter
+import com.example.milestone2.ui.add_and_modify_contact.AddAndModifyContact
+import com.example.milestone2.databinding.FragmentHomeBinding
+import com.google.android.material.floatingactionbutton.FloatingActionButton
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.runBlocking
 
-
-class ContactsMain(private val contactViewModel: ContactViewModel):Fragment(R.layout.fragment_contacts_main) {
-    private lateinit var addContactButton: ImageButton
-    private lateinit var fragmentView: View
+@AndroidEntryPoint
+class HomeFragment : Fragment() {
+    private val homeViewModel: HomeViewModel by viewModels()
+    private var _binding: FragmentHomeBinding? = null
+    private lateinit var addContactButton: FloatingActionButton
     lateinit var  contactsAdapter: ContactsRecyclerViewAdapter
-    private lateinit var addAndModifyContact:AddAndModifyContact
-    private lateinit var rView:RecyclerView
+    private lateinit var addAndModifyContact: AddAndModifyContact
+    private lateinit var rView: RecyclerView
+
+    // This property is only valid between onCreateView and
+    // onDestroyView.
+    private val binding get() = _binding!!
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        fragmentView = inflater.inflate(R.layout.fragment_contacts_main, container, false)
-        addAndModifyContact = AddAndModifyContact(contactViewModel)
-        addContactButton = fragmentView.findViewById(R.id.add_contact_btn)
-        rView = fragmentView.findViewById(R.id.contacts_recycler_view)
+        _binding = FragmentHomeBinding.inflate(inflater, container, false)
+        val root: View = binding.root
+        addAndModifyContact = AddAndModifyContact(homeViewModel)
+        addContactButton = root.findViewById(R.id.add_contact_btn)
+        rView = root.findViewById(R.id.contacts_recycler_view)
         rView.layoutManager = LinearLayoutManager(context)
         contactsAdapter = ContactsRecyclerViewAdapter(object : ContactsRecyclerViewAdapter.OptionsMenuClickListener{
             // implement the required method
@@ -50,7 +61,8 @@ class ContactsMain(private val contactViewModel: ContactViewModel):Fragment(R.la
         setListAdapter()
         rView.adapter = contactsAdapter
         listeners()
-        return fragmentView
+
+        return root
     }
 
     override fun onResume() {
@@ -62,7 +74,7 @@ class ContactsMain(private val contactViewModel: ContactViewModel):Fragment(R.la
     private fun setListAdapter()
     {
         runBlocking {
-            contactViewModel.getAllContactsObserver().observe(activity as FragmentActivity) {
+            homeViewModel.getAllContactsObserver().observe(activity as FragmentActivity) {
                 contactsAdapter.setList(ArrayList(it))
             }
             contactsAdapter.notifyDataSetChanged()
@@ -102,7 +114,7 @@ class ContactsMain(private val contactViewModel: ContactViewModel):Fragment(R.la
                                 when (which) {
                                     DialogInterface.BUTTON_POSITIVE -> {
                                         deleteContact(position)
-                                        Toast.makeText(activity as Context , "Contact Deleted Successfully" , Toast.LENGTH_SHORT).show()
+                                        Toast.makeText(activity as Context, "Contact Deleted Successfully" , Toast.LENGTH_SHORT).show()
                                         setListAdapter()
                                     }
                                     DialogInterface.BUTTON_NEGATIVE -> {
@@ -136,7 +148,7 @@ class ContactsMain(private val contactViewModel: ContactViewModel):Fragment(R.la
     private fun deleteContact(position:Int)
     {
         runBlocking {
-            contactViewModel.delete(contactsAdapter.contactsList[position])
+            homeViewModel.delete(contactsAdapter.contactsList[position])
             setListAdapter()
         }
     }
@@ -152,4 +164,9 @@ class ContactsMain(private val contactViewModel: ContactViewModel):Fragment(R.la
         addAndModifyContact.show(requireActivity().supportFragmentManager,"CreateNewContact")
     }
 
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+    }
 }

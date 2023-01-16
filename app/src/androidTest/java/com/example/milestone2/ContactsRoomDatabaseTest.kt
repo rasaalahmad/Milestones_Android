@@ -1,26 +1,18 @@
 package com.example.milestone2
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
-import androidx.test.ext.junit.runners.AndroidJUnit4
-import com.example.milestone2.contacts_app.ContactViewModel
 import com.example.milestone2.data_classes.Contacts
 import com.example.milestone2.room_database.AppDatabase
 import com.example.milestone2.room_database.ContactDao
-import com.example.milestone2.room_database.ContactDatabaseClient
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
 import junit.framework.TestCase.assertEquals
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.test.*
 import org.junit.After
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
-import org.junit.runner.RunWith
-import org.mockito.Mock
-import org.mockito.Mockito
-import org.mockito.MockitoAnnotations
 import javax.inject.Inject
 
 @HiltAndroidTest
