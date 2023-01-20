@@ -7,7 +7,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.milestone2.R
-import com.example.milestone2.data_classes.Meme
+import com.example.milestone2.classes.Meme
 import com.squareup.picasso.Picasso
 
 class MemeViewAdapter(private val memeList: List<Meme>):RecyclerView.Adapter<MemeViewAdapter.ViewHolder>() {

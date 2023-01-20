@@ -1,4 +1,4 @@
-package com.example.milestone2.data_classes
+package com.example.milestone2.classes
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity

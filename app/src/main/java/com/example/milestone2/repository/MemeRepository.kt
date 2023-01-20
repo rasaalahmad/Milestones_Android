@@ -2,7 +2,7 @@ package com.example.milestone2.repository
 
 import androidx.lifecycle.MutableLiveData
 import com.example.milestone2.api_resources.MemeAPIClient
-import com.example.milestone2.data_classes.Data
+import com.example.milestone2.classes.Data
 
 class MemeRepository {
     val memeAPIClient = MemeAPIClient()

@@ -1,6 +1,6 @@
 package com.example.milestone2.api_resources
 
-import com.example.milestone2.data_classes.MemeData
+import com.example.milestone2.classes.MemeData
 import retrofit2.Call
 import retrofit2.http.GET
 

@@ -2,13 +2,9 @@ package com.example.milestone2
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import com.example.milestone2.api_resources.MemeAPI
-import com.example.milestone2.api_resources.MemeAPIClient
 import com.example.milestone2.api_resources.MemeAPIEndpointInterface
 import com.example.milestone2.viewmodels.MemeViewModel
-import com.example.milestone2.data_classes.Data
-import com.example.milestone2.data_classes.Meme
 import com.example.milestone2.repository.MemeRepository
-import com.google.common.truth.ExpectFailure.assertThat
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest
 import org.junit.Before
@@ -17,7 +13,6 @@ import org.junit.Test
 import org.junit.runner.RunWith
 import org.mockito.InjectMocks
 import org.mockito.Mock
-import org.mockito.Mockito
 import org.mockito.MockitoAnnotations
 import org.mockito.junit.MockitoJUnitRunner
 

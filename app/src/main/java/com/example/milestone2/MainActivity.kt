@@ -8,9 +8,9 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.milestone2.adapters.MemeViewAdapter
 import com.example.milestone2.api_resources.MemeAPI
 import com.example.milestone2.api_resources.MemeAPIEndpointInterface
-import com.example.milestone2.data_classes.Data
-import com.example.milestone2.data_classes.Meme
-import com.example.milestone2.data_classes.MemeData
+import com.example.milestone2.classes.Data
+import com.example.milestone2.classes.Meme
+import com.example.milestone2.classes.MemeData
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import kotlinx.coroutines.runBlocking
