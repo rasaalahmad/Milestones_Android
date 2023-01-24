@@ -4,6 +4,7 @@ plugins {
     id 'kotlin-kapt'
     id 'dagger.hilt.android.plugin'
     id("com.google.dagger.hilt.android")
+    id 'com.google.gms.google-services'
 }
 
 android {
@@ -48,6 +49,8 @@ dependencies {
 
     implementation 'androidx.navigation:navigation-fragment-ktx:2.5.3'
     implementation 'androidx.navigation:navigation-ui-ktx:2.5.3'
+    implementation 'com.google.firebase:firebase-messaging-ktx:23.0.2'
+    implementation 'androidx.work:work-runtime-ktx:2.7.1'
 
     testImplementation 'org.junit.jupiter:junit-jupiter'
     testImplementation 'org.junit.jupiter:junit-jupiter'

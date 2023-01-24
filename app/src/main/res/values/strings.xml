@@ -44,4 +44,6 @@
     <string name="rasaal_ahmad">Rasaal Ahmad</string>
     <string name="rasaalahmad_folio3_com">rasaalahmad@folio3.com</string>
     <string name="my_name">Rasaal Ahmad</string>
+    <string name="fcm_message">FCM Message</string>
+    <string name="msg_token_fmt">FCM Token</string>
 </resources>

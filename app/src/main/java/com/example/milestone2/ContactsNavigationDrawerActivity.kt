@@ -1,9 +1,14 @@
 package com.example.milestone2
 
+import android.Manifest.permission.POST_NOTIFICATIONS
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import android.view.Menu
+import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.annotation.RequiresApi
 import com.google.android.material.navigation.NavigationView
@@ -15,11 +20,14 @@ import androidx.navigation.ui.setupWithNavController
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContentProviderCompat.requireContext
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.viewModels
 import com.example.milestone2.classes.NotificationServiceClass
 import com.example.milestone2.databinding.ActivityContactsNavigationDrawerBinding
 import com.example.milestone2.ui.home.HomeViewModel
+import com.google.android.gms.tasks.OnCompleteListener
 import com.google.android.material.floatingactionbutton.FloatingActionButton
+import com.google.firebase.messaging.FirebaseMessaging
 import dagger.hilt.android.AndroidEntryPoint
 import dagger.hilt.android.HiltAndroidApp
 
@@ -47,6 +55,16 @@ class ContactsNavigationDrawerActivity : AppCompatActivity() {
         )
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
+
+        FirebaseMessaging.getInstance().token.addOnCompleteListener(OnCompleteListener { task ->
+            if (!task.isSuccessful) {
+                Log.w("TAG", "Fetching FCM registration token failed", task.exception)
+                return@OnCompleteListener
+            }
+
+        })
+
+
     }
 
 
@@ -55,4 +73,7 @@ class ContactsNavigationDrawerActivity : AppCompatActivity() {
             findNavController(R.id.nav_host_fragment_content_contacts_navigation_drawer)
         return navController.navigateUp(appBarConfiguration) || super.onSupportNavigateUp()
     }
+
+
+
 }

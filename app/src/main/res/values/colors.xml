@@ -33,4 +33,5 @@
     <color name="lagoon_3">#FDD037</color>
     <color name="parrot_green">#2ECC71</color>
     <color name="light_purple">#6464E2</color>
+    <color name="colorAccent">#FFA000</color>
 </resources>
