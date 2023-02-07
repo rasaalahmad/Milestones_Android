@@ -1,4 +1,4 @@
-package com.example.milestone2.contacts_app
+package com.example.milestone2.ui.add_and_modify_contact
 
 import android.annotation.SuppressLint
 import android.content.DialogInterface
@@ -12,13 +12,12 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.widget.AppCompatImageButton
 import androidx.fragment.app.DialogFragment
-import androidx.fragment.app.FragmentActivity
-import androidx.lifecycle.ViewModelProviders
 import com.example.milestone2.R
 import com.example.milestone2.data_classes.Contacts
+import com.example.milestone2.ui.home.HomeViewModel
 import kotlinx.coroutines.runBlocking
 
-class AddAndModifyContact(private val contactViewModel: ContactViewModel):DialogFragment() {
+class AddAndModifyContact(private val contactViewModel: HomeViewModel):DialogFragment() {
     private lateinit var fragmentView: View
     private lateinit var savebtn:Button
     private lateinit var closeBtn: AppCompatImageButton
@@ -41,6 +40,11 @@ class AddAndModifyContact(private val contactViewModel: ContactViewModel):Dialog
         closeBtn = fragmentView.findViewById(R.id.close_add_fragment)
         titleTextView = fragmentView.findViewById(R.id.create_contact_text)
         return fragmentView
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setStyle(STYLE_NORMAL, R.style.FullScreenDialog)
     }
 
 
