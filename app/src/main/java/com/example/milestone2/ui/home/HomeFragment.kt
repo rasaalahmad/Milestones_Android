@@ -9,6 +9,7 @@ import android.view.LayoutInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.ImageButton
 import android.widget.PopupMenu
 import android.widget.Toast
@@ -34,6 +35,7 @@ class HomeFragment : Fragment() {
     lateinit var  contactsAdapter: ContactsRecyclerViewAdapter
     private lateinit var addAndModifyContact: AddAndModifyContact
     private lateinit var rView: RecyclerView
+    private lateinit var crashTestButton: Button
 
     // This property is only valid between onCreateView and
     // onDestroyView.
@@ -50,6 +52,9 @@ class HomeFragment : Fragment() {
         addContactButton = root.findViewById(R.id.add_contact_btn)
         rView = root.findViewById(R.id.contacts_recycler_view)
         rView.layoutManager = LinearLayoutManager(context)
+
+        crashTestButton = root.findViewById(R.id.test_crash)
+
         contactsAdapter = ContactsRecyclerViewAdapter(object : ContactsRecyclerViewAdapter.OptionsMenuClickListener{
             // implement the required method
             override fun onOptionsMenuClicked(position: Int) {
@@ -93,6 +98,10 @@ class HomeFragment : Fragment() {
             addAndModifyContact.arguments = bundle
             addAndModifyContact.show(requireActivity().supportFragmentManager,"CreateNewContact")
             setListAdapter()
+        }
+
+        crashTestButton.setOnClickListener {
+          throw RuntimeException("Test Crash") // Force a crash
         }
     }
 
