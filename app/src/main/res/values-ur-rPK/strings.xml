@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">رابطے ایپ</string>
+    <string name="milestone_2">سنگ میل 2</string>
+    <string name="meme_name_">میم کا نام</string>
+    <string name="meme_from_api">API سے میم</string>
+    <string name="background_image">پس منظر کی تصویر</string>
+
+    <string name="start">شروع کریں</string>
+    <string name="sidebar_design">سائڈبار ڈیزائن</string>
+    <string name="login">لاگ ان کریں</string>
+    <string name="login_asset">لاگ ان_اثاثہ</string>
+    <string name="username">صارف نام</string>
+    <string name="password">پاس ورڈ</string>
+    <string name="forgot">بھول؟</string>
+    <string name="register">رجسٹر کریں۔</string>
+    <string name="come_back_with_your_id">اپنی شناخت کے ساتھ واپس آجائیں۔</string>
+    <string name="forget_password">پاس ورڈ بھول جانا؟</string>
+    <string name="or">یا</string>
+    <string name="not_a_member_sign_up">ممبر نہیں؟ <font color='#01C6DB'> سائن اپ</font> </string>
+    <string name="sign_up">سائن اپ</string>
+    <string name="person_name">شخص کا نام</string>
+    <string name="sample_number">+923---------</string>
+    <string name="hello_blank_fragment">ہیلو خالی ٹکڑا</string>
+    <string name="create_contact">رابطہ بنائیں</string>
+    <string name="save">محفوظ کریں۔</string>
+    <string name="full_name">پورا نام</string>
+    <string name="phone_number">فون نمبر</string>
+    <string name="contacts">رابطے</string>
+    <string name="edit">ترمیم</string>
+    <string name="delete">حذف کریں۔</string>
+    <string name="title_activity_contacts_navigation_drawer">رابطے نیویگیشن ڈراور ایکٹیویٹی
+    </string>
+    <string name="navigation_drawer_open">نیویگیشن دراز کھولیں۔</string>
+    <string name="navigation_drawer_close">نیویگیشن دراز بند کریں۔</string>
+    <string name="nav_header_title">اینڈرائیڈ اسٹوڈیو</string>
+    <string name="nav_header_subtitle">android.studio@android.com</string>
+    <string name="nav_header_desc">نیویگیشن ہیڈر</string>
+    <string name="action_settings">ترتیبات</string>
+
+    <string name="menu_home">گھر</string>
+    <string name="menu_gallery">گیلری</string>
+    <string name="menu_slideshow">سلائیڈ شو</string>
+    <string name="about_us">ہمارے بارے میں</string>
+    <string name="rasaal_ahmad">رسال احمد</string>
+    <string name="rasaalahmad_folio3_com">rasaalahmad@folio3.com</string>
+    <string name="my_name">رسال احمد</string>
+    <string name="fcm_message">FCM Message</string>
+    <string name="msg_token_fmt">FCM Token</string>
+    <string name="test_crashlytics">Crashlytics ٹیسٹ کریں۔</string>
+    <string name="dialog_message">کیا تمہیں یقین ہے؟</string>
+    <string name="yes">جی ہاں</string>
+    <string name="no">نہیں</string>
+    <string name="contact_delete_message">رابطہ کامیابی سے حذف ہو گیا۔</string>
+    <string name="contact_update_message">رابطہ کامیابی سے اپ ڈیٹ ہو گیا۔</string>
+    <string name="contact_added_message">رابطہ کامیابی سے شامل ہو گیا۔</string>
+    <string name="enter_complete_details">مکمل تفصیلات درج کریں!!</string>
+</resources>

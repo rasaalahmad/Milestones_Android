@@ -24,6 +24,10 @@ import com.example.milestone2.adapters.ContactsRecyclerViewAdapter
 import com.example.milestone2.ui.add_and_modify_contact.AddAndModifyContact
 import com.example.milestone2.databinding.FragmentHomeBinding
 import com.google.android.material.floatingactionbutton.FloatingActionButton
+import com.google.firebase.analytics.FirebaseAnalytics
+import com.google.firebase.analytics.ktx.analytics
+import com.google.firebase.analytics.ktx.logEvent
+import com.google.firebase.ktx.Firebase
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.runBlocking
 
@@ -36,7 +40,7 @@ class HomeFragment : Fragment() {
     private lateinit var addAndModifyContact: AddAndModifyContact
     private lateinit var rView: RecyclerView
     private lateinit var crashTestButton: Button
-
+    private lateinit var firebaseAnalytics: FirebaseAnalytics
     // This property is only valid between onCreateView and
     // onDestroyView.
     private val binding get() = _binding!!
@@ -70,6 +74,11 @@ class HomeFragment : Fragment() {
         return root
     }
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        firebaseAnalytics = Firebase.analytics
+    }
+
     override fun onResume() {
         super.onResume()
         setListAdapter()
@@ -90,6 +99,10 @@ class HomeFragment : Fragment() {
     {
         addAndModifyContact.setOnDismissListener {
             setListAdapter()
+            firebaseAnalytics.logEvent("dismiss_button_clicked") {
+                param(FirebaseAnalytics.Param.ITEM_ID, "1")
+                param(FirebaseAnalytics.Param.ITEM_NAME, "close_dialog_fragment")
+            }
         }
 
         addContactButton.setOnClickListener{
@@ -98,6 +111,10 @@ class HomeFragment : Fragment() {
             addAndModifyContact.arguments = bundle
             addAndModifyContact.show(requireActivity().supportFragmentManager,"CreateNewContact")
             setListAdapter()
+            firebaseAnalytics.logEvent("add_contact_button_clicked") {
+                param(FirebaseAnalytics.Param.ITEM_ID, "2")
+                param(FirebaseAnalytics.Param.ITEM_NAME, "open_add_modify_dialog_fragment")
+            }
         }
 
         crashTestButton.setOnClickListener {
@@ -123,8 +140,14 @@ class HomeFragment : Fragment() {
                                 when (which) {
                                     DialogInterface.BUTTON_POSITIVE -> {
                                         deleteContact(position)
-                                        Toast.makeText(activity as Context, "Contact Deleted Successfully" , Toast.LENGTH_SHORT).show()
+                                        Toast.makeText(activity as Context, resources.getString(R.string.contact_delete_message),
+                                            Toast.LENGTH_SHORT).show()
                                         setListAdapter()
+
+                                        firebaseAnalytics.logEvent("contact_deleted") {
+                                            param(FirebaseAnalytics.Param.ITEM_ID, "5")
+                                            param(FirebaseAnalytics.Param.ITEM_NAME, "contact deleted in database")
+                                        }
                                     }
                                     DialogInterface.BUTTON_NEGATIVE -> {
                                         dialog.cancel()
@@ -150,8 +173,9 @@ class HomeFragment : Fragment() {
     {
 
         val builder: AlertDialog.Builder = AlertDialog.Builder(context)
-        builder.setMessage("Are you sure?").setPositiveButton("Yes", dialogClickListener)
-            .setNegativeButton("No", dialogClickListener).show()
+        builder.setMessage(resources.getString(R.string.dialog_message)).setPositiveButton(resources.getString(R.string.yes),
+            dialogClickListener)
+            .setNegativeButton(resources.getString(R.string.no), dialogClickListener).show()
     }
 
     private fun deleteContact(position:Int)

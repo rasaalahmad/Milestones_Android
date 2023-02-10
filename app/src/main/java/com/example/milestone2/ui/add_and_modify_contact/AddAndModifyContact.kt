@@ -20,6 +20,10 @@ import com.example.milestone2.R
 import com.example.milestone2.classes.Contacts
 import com.example.milestone2.classes.NotificationServiceClass
 import com.example.milestone2.ui.home.HomeViewModel
+import com.google.firebase.analytics.FirebaseAnalytics
+import com.google.firebase.analytics.ktx.analytics
+import com.google.firebase.analytics.ktx.logEvent
+import com.google.firebase.ktx.Firebase
 import kotlinx.coroutines.runBlocking
 
 class AddAndModifyContact(private val contactViewModel: HomeViewModel):DialogFragment() {
@@ -33,6 +37,7 @@ class AddAndModifyContact(private val contactViewModel: HomeViewModel):DialogFra
     private var uid:Int = 0
     private lateinit var intent:Intent
     private lateinit var notificationServiceClass: NotificationServiceClass
+    private lateinit var firebaseAnalytics: FirebaseAnalytics
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -54,6 +59,7 @@ class AddAndModifyContact(private val contactViewModel: HomeViewModel):DialogFra
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setStyle(STYLE_NORMAL, R.style.FullScreenDialog)
+        firebaseAnalytics = Firebase.analytics
     }
 
 
@@ -116,9 +122,14 @@ class AddAndModifyContact(private val contactViewModel: HomeViewModel):DialogFra
                     }
                     Toast.makeText(
                         fragmentView.context,
-                        "Contact Added Successfully",
+                        resources.getString(R.string.contact_added_message),
                         Toast.LENGTH_SHORT
                     ).show()
+
+                    firebaseAnalytics.logEvent("contact_inserted") {
+                        param(FirebaseAnalytics.Param.ITEM_ID, "3")
+                        param(FirebaseAnalytics.Param.ITEM_NAME, "contact insertion in database")
+                    }
                 }
                 else{
 
@@ -131,9 +142,14 @@ class AddAndModifyContact(private val contactViewModel: HomeViewModel):DialogFra
 
                     Toast.makeText(
                         fragmentView.context,
-                        "Contact Updated Successfully",
+                        resources.getString(R.string.contact_update_message),
                         Toast.LENGTH_SHORT
                     ).show()
+
+                    firebaseAnalytics.logEvent("contact_updated") {
+                        param(FirebaseAnalytics.Param.ITEM_ID, "4")
+                        param(FirebaseAnalytics.Param.ITEM_NAME, "contact updated in database")
+                    }
                 }
 
 
@@ -143,7 +159,7 @@ class AddAndModifyContact(private val contactViewModel: HomeViewModel):DialogFra
             } else {
                 Toast.makeText(
                     fragmentView.context,
-                    "Enter complete details!!",
+                    resources.getString(R.string.enter_complete_details),
                     Toast.LENGTH_SHORT
                 ).show()
             }
