@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mobile_navigation"
+    app:startDestination="@+id/nav_home">
+
+    <fragment
+        android:id="@+id/nav_home"
+        android:name="com.example.milestone2.ui.home.HomeFragment"
+        android:label="@string/menu_home"
+        tools:layout="@layout/fragment_home" >
+        <action
+            android:id="@+id/action_nav_home_to_nav_add_modify_contact_dialog"
+            app:destination="@id/nav_add_modify_contact_dialog" />
+    </fragment>
+
+  <dialog
+      android:id="@+id/nav_add_modify_contact_dialog"
+      android:name="com.example.milestone2.ui.add_and_modify_contact.AddAndModifyContact"
+      android:label="Add and Update Contact"
+      tools:layout="@layout/fragment_add_modify_contact">
+      <action
+          android:id="@+id/action_nav_add_modify_contact_dialog_to_nav_home"
+          app:destination="@id/nav_home" />
+  </dialog>
+
+    <fragment
+        android:id="@+id/nav_about_us"
+        android:name="com.example.milestone2.ui.about_us.AboutUsFragment"
+        android:label="@string/about_us"
+        tools:layout="@layout/fragment_about_us" />
+</navigation>
