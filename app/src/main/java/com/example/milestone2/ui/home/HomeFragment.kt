@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.app.AlertDialog
 import android.content.Context
 import android.content.DialogInterface
+import android.content.res.Configuration
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.MenuItem
@@ -197,6 +198,16 @@ class HomeFragment : Fragment() {
         addAndModifyContact.show(requireActivity().supportFragmentManager,"CreateNewContact")
     }
 
+    override fun onConfigurationChanged(newConfig: Configuration) {
+        super.onConfigurationChanged(newConfig)
+        if (newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE) {
+            crashTestButton.visibility = View.GONE
+            Toast.makeText(activity?.baseContext, "Landscape Mode", Toast.LENGTH_SHORT).show()
+        } else if (newConfig.orientation == Configuration.ORIENTATION_PORTRAIT) {
+            crashTestButton.visibility = View.VISIBLE
+            Toast.makeText(activity?.baseContext, "Portrait Mode", Toast.LENGTH_SHORT).show()
+        }
+    }
 
     override fun onDestroyView() {
         super.onDestroyView()
