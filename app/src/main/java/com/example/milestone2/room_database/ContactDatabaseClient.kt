@@ -1,8 +1,6 @@
 package com.example.milestone2.room_database
 
-import android.app.Application
-import com.example.milestone2.data_classes.Contacts
-import kotlinx.coroutines.runBlocking
+import com.example.milestone2.classes.Contacts
 import javax.inject.Inject
 
 class ContactDatabaseClient @Inject
