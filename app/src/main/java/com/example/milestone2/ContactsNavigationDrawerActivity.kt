@@ -19,6 +19,7 @@ import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ActivityCompat
 import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.viewModels
@@ -30,12 +31,14 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.firebase.messaging.FirebaseMessaging
 import dagger.hilt.android.AndroidEntryPoint
 import dagger.hilt.android.HiltAndroidApp
+import java.security.Permission
 
 @AndroidEntryPoint
 class ContactsNavigationDrawerActivity : AppCompatActivity() {
     private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var binding: ActivityContactsNavigationDrawerBinding
 
+    @RequiresApi(Build.VERSION_CODES.TIRAMISU)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -64,7 +67,33 @@ class ContactsNavigationDrawerActivity : AppCompatActivity() {
 
         })
 
+        permissionCheck()
 
+
+    }
+
+    @RequiresApi(Build.VERSION_CODES.TIRAMISU)
+    private fun permissionCheck() {
+        if (ContextCompat.checkSelfPermission(this,android.Manifest.permission.CAMERA)
+            == PackageManager.PERMISSION_DENIED)
+        {
+            ActivityCompat.requestPermissions(this,
+                arrayOf(android.Manifest.permission.CAMERA),100)
+        }
+
+        if (ContextCompat.checkSelfPermission(this, POST_NOTIFICATIONS)
+            == PackageManager.PERMISSION_DENIED)
+        {
+            ActivityCompat.requestPermissions(this,
+                arrayOf(POST_NOTIFICATIONS),100)
+        }
+
+        if (ContextCompat.checkSelfPermission(this,android.Manifest.permission.FOREGROUND_SERVICE)
+            == PackageManager.PERMISSION_DENIED)
+        {
+            ActivityCompat.requestPermissions(this,
+                arrayOf(android.Manifest.permission.FOREGROUND_SERVICE),100)
+        }
     }
 
 

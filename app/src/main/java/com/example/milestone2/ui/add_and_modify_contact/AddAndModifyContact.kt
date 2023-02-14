@@ -3,6 +3,7 @@ package com.example.milestone2.ui.add_and_modify_contact
 import android.annotation.SuppressLint
 import android.content.DialogInterface
 import android.content.Intent
+import android.hardware.Camera
 import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -13,6 +14,7 @@ import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
 import androidx.annotation.RequiresApi
+import androidx.appcompat.widget.AppCompatButton
 import androidx.appcompat.widget.AppCompatImageButton
 import androidx.fragment.app.DialogFragment
 import com.example.milestone2.ContactsNavigationDrawerActivity
@@ -20,6 +22,7 @@ import com.example.milestone2.R
 import com.example.milestone2.classes.Contacts
 import com.example.milestone2.classes.NotificationServiceClass
 import com.example.milestone2.ui.home.HomeViewModel
+import com.example.milestone2.ui.image_bottom_sheet.ImageUploadBottomSheetFragment
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.analytics.ktx.analytics
 import com.google.firebase.analytics.ktx.logEvent
@@ -38,6 +41,7 @@ class AddAndModifyContact(private val contactViewModel: HomeViewModel):DialogFra
     private lateinit var intent:Intent
     private lateinit var notificationServiceClass: NotificationServiceClass
     private lateinit var firebaseAnalytics: FirebaseAnalytics
+    private lateinit var uploadImageButton: AppCompatButton
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -51,6 +55,7 @@ class AddAndModifyContact(private val contactViewModel: HomeViewModel):DialogFra
         phoneNumber = fragmentView.findViewById(R.id.contact_number)
         closeBtn = fragmentView.findViewById(R.id.close_add_fragment)
         titleTextView = fragmentView.findViewById(R.id.create_contact_text)
+        uploadImageButton = fragmentView.findViewById(R.id.image_upload_button)
         intent = Intent(context, ContactsNavigationDrawerActivity::class.java)
         notificationServiceClass = NotificationServiceClass(requireContext())
         return fragmentView
@@ -167,6 +172,11 @@ class AddAndModifyContact(private val contactViewModel: HomeViewModel):DialogFra
         closeBtn.setOnClickListener{
             val manager = requireActivity().supportFragmentManager
             manager.beginTransaction().remove(this).commit()
+        }
+
+        uploadImageButton.setOnClickListener {
+            val imageUploadBottomSheetFragment = ImageUploadBottomSheetFragment()
+            imageUploadBottomSheetFragment.show(requireActivity().supportFragmentManager,null)
         }
     }
 

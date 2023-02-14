@@ -9,7 +9,7 @@
     <View
         android:id="@+id/add_con_frame"
         android:layout_width="match_parent"
-        android:layout_height="300dp"
+        android:layout_height="350dp"
         android:background="@drawable/dialog_box"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -46,6 +46,21 @@
         app:layout_constraintEnd_toEndOf="@id/add_con_frame"
         app:layout_constraintVertical_bias="0.15"/>
 
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/image_upload_button"
+        android:layout_width="170dp"
+        android:layout_height="wrap_content"
+        android:drawableStart="@drawable/ic_camera_theme_dark"
+        app:layout_constraintTop_toBottomOf="@id/create_contact_text"
+        app:layout_constraintBottom_toTopOf="@id/full_name"
+        app:layout_constraintStart_toStartOf="@id/create_contact_text"
+        app:layout_constraintEnd_toEndOf="@id/create_contact_text"
+        android:background="@drawable/button_view2"
+        android:text="@string/upload_image"
+        android:textColor="@color/white"
+        android:textSize="18sp"
+        android:gravity="center" />
+
     <EditText
         android:id="@+id/full_name"
         android:layout_width="350dp"
@@ -63,7 +78,7 @@
         app:layout_constraintEnd_toEndOf="@id/add_con_frame"
         app:layout_constraintStart_toStartOf="@id/add_con_frame"
         app:layout_constraintTop_toBottomOf="@id/create_contact_text"
-        app:layout_constraintVertical_bias="0.2"
+        app:layout_constraintVertical_bias="0.35"
         android:inputType="text"/>
 
     <EditText
