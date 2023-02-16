@@ -34,7 +34,7 @@ import kotlinx.coroutines.runBlocking
 
 @AndroidEntryPoint
 class HomeFragment : Fragment() {
-    private val homeViewModel: HomeViewModel by viewModels()
+    val homeViewModel: HomeViewModel by viewModels()
     private var _binding: FragmentHomeBinding? = null
     private lateinit var addContactButton: FloatingActionButton
     lateinit var  contactsAdapter: ContactsRecyclerViewAdapter
@@ -193,6 +193,7 @@ class HomeFragment : Fragment() {
         bundle.putInt("uid",contactsAdapter.contactsList[position].uid)
         bundle.putString("person_name", contactsAdapter.contactsList[position].person_name)
         bundle.putString("contact_number", contactsAdapter.contactsList[position].contact_number)
+        bundle.putString("image_path",contactsAdapter.contactsList[position].image_path)
         bundle.putBoolean("isUpdate", true)
         addAndModifyContact.arguments = bundle
         addAndModifyContact.show(requireActivity().supportFragmentManager,"CreateNewContact")

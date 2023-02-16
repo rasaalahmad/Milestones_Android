@@ -3,7 +3,6 @@ package com.example.milestone2.ui.add_and_modify_contact
 import android.annotation.SuppressLint
 import android.content.DialogInterface
 import android.content.Intent
-import android.hardware.Camera
 import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -21,6 +20,7 @@ import com.example.milestone2.ContactsNavigationDrawerActivity
 import com.example.milestone2.R
 import com.example.milestone2.classes.Contacts
 import com.example.milestone2.classes.NotificationServiceClass
+import com.example.milestone2.ui.home.HomeFragment
 import com.example.milestone2.ui.home.HomeViewModel
 import com.example.milestone2.ui.image_bottom_sheet.ImageUploadBottomSheetFragment
 import com.google.firebase.analytics.FirebaseAnalytics
@@ -29,7 +29,7 @@ import com.google.firebase.analytics.ktx.logEvent
 import com.google.firebase.ktx.Firebase
 import kotlinx.coroutines.runBlocking
 
-class AddAndModifyContact(private val contactViewModel: HomeViewModel):DialogFragment() {
+class AddAndModifyContact(private var homeViewModel: HomeViewModel):DialogFragment() {
     private lateinit var fragmentView: View
     private lateinit var savebtn:Button
     private lateinit var closeBtn: AppCompatImageButton
@@ -42,6 +42,7 @@ class AddAndModifyContact(private val contactViewModel: HomeViewModel):DialogFra
     private lateinit var notificationServiceClass: NotificationServiceClass
     private lateinit var firebaseAnalytics: FirebaseAnalytics
     private lateinit var uploadImageButton: AppCompatButton
+    private var absoluteImagePath:String = ""
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -99,10 +100,11 @@ class AddAndModifyContact(private val contactViewModel: HomeViewModel):DialogFra
         else{
             titleTextView.text = "Update Contact"
             uid = mArgs.getInt("uid")
-            val person_name = mArgs.getString("person_name")
-            val contact_number = mArgs.getString("contact_number")
-            personName.setText(person_name)
-            phoneNumber.setText(contact_number)
+            homeViewModel.mutableLiveContact.value!!.person_name = mArgs.getString("person_name")
+            homeViewModel.mutableLiveContact.value!!.contact_number = mArgs.getString("contact_number")
+            homeViewModel.mutableLiveContact.value!!.image_path = mArgs.getString("image_path").toString()
+            personName.setText(homeViewModel.mutableLiveContact.value!!.person_name)
+            phoneNumber.setText(homeViewModel.mutableLiveContact.value!!.contact_number)
             buttonListeners(true)
         }
     }
@@ -115,12 +117,12 @@ class AddAndModifyContact(private val contactViewModel: HomeViewModel):DialogFra
 
                 if(!isUpdate)
                 {
+                    homeViewModel.mutableLiveContact.value!!.person_name = personName.text.toString()
+                    homeViewModel.mutableLiveContact.value!!.contact_number = phoneNumber.text.toString()
+
                     runBlocking {
-                        contactViewModel.insert(
-                            Contacts(
-                                personName.text.toString(),
-                                phoneNumber.text.toString()
-                            )
+                        homeViewModel.insert(
+                            homeViewModel.mutableLiveContact.value!!
                         )
                         notificationServiceClass.createNotification("New Contact",
                             "${personName.text} added in Contacts", intent)
@@ -139,9 +141,9 @@ class AddAndModifyContact(private val contactViewModel: HomeViewModel):DialogFra
                 else{
 
                     runBlocking{
-                        val contact:Contacts = Contacts(personName.text.toString(),phoneNumber.text.toString())
+                        val contact:Contacts = homeViewModel.mutableLiveContact.value!!
                         contact.uid = uid
-                        contactViewModel.updateContact(contact)
+                        homeViewModel.updateContact(contact)
                         //Log.d("Update Check",contactViewModel.getAllContacts())
                     }
 
@@ -175,18 +177,15 @@ class AddAndModifyContact(private val contactViewModel: HomeViewModel):DialogFra
         }
 
         uploadImageButton.setOnClickListener {
-            val imageUploadBottomSheetFragment = ImageUploadBottomSheetFragment()
+            val imageUploadBottomSheetFragment = ImageUploadBottomSheetFragment(homeViewModel)
+            imageUploadBottomSheetFragment.setTargetFragment(this, 123)
             imageUploadBottomSheetFragment.show(requireActivity().supportFragmentManager,null)
         }
     }
 
     private fun fieldCheck():Boolean
     {
-        if(personName.text.toString() == "" || phoneNumber.text.toString() == "")
-        {
-            return false
-        }
-        return true
+        return (personName.text.toString() != "" && phoneNumber.text.toString() != "");
     }
 
     fun setOnDismissListener(onDismissListener: DialogInterface.OnDismissListener)
