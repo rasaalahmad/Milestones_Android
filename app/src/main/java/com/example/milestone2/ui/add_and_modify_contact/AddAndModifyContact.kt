@@ -42,7 +42,6 @@ class AddAndModifyContact(private var homeViewModel: HomeViewModel):DialogFragme
     private lateinit var notificationServiceClass: NotificationServiceClass
     private lateinit var firebaseAnalytics: FirebaseAnalytics
     private lateinit var uploadImageButton: AppCompatButton
-    private var absoluteImagePath:String = ""
 
     override fun onCreateView(
         inflater: LayoutInflater,

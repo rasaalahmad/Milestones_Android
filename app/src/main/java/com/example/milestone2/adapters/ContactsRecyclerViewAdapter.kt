@@ -12,6 +12,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.milestone2.R
 import com.example.milestone2.classes.Contacts
+import com.google.gson.internal.bind.TypeAdapters.URI
 import com.squareup.picasso.Picasso
 
 class ContactsRecyclerViewAdapter( private var optionsMenuClickListener: OptionsMenuClickListener):
@@ -46,7 +47,7 @@ class ContactsRecyclerViewAdapter( private var optionsMenuClickListener: Options
             holder.contactNumber.text = contact.contact_number
             if(contact.image_path != "")
             {
-                Picasso.get().load(contact.image_path).into(holder.userImage)
+                Picasso.get().load(Uri.parse(contact.image_path)).into(holder.userImage)
             }
             itemView.setOnClickListener{
                 optionsMenuClickListener.onOptionsMenuClicked(position)
