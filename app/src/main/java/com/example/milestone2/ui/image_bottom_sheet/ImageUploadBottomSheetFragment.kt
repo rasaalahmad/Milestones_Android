@@ -39,7 +39,6 @@ class ImageUploadBottomSheetFragment(private var homeViewModel: HomeViewModel) :
 
     private fun buttonListeners() {
         cameraButton.setOnClickListener {
-            val REQUEST_IMAGE_CAPTURE = 1
             val takePictureIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
             try {
                 startActivityForResult(takePictureIntent, CAPTURE_IMAGE_ID)
@@ -62,7 +61,7 @@ class ImageUploadBottomSheetFragment(private var homeViewModel: HomeViewModel) :
         // Match the request 'pic id with requestCode
         if (requestCode == CAPTURE_IMAGE_ID) {
             // BitMap is data structure of image file which store the image in memory
-            val photo = data!!.extras!!["data"] as Bitmap?
+            val imageBitmap = data!!.data as Bitmap?
             // Set the image in imageview for display
            // clickImageId.setImageBitmap(photo)
 
@@ -73,7 +72,7 @@ class ImageUploadBottomSheetFragment(private var homeViewModel: HomeViewModel) :
             // Save the captured image to the device's external storage
             val imageFile = File(requireActivity().getExternalFilesDir(Environment.DIRECTORY_PICTURES), imageFileName)
             val outputStream = FileOutputStream(imageFile)
-            photo?.compress(Bitmap.CompressFormat.JPEG, 100, outputStream)
+            imageBitmap?.compress(Bitmap.CompressFormat.JPEG, 100, outputStream)
             outputStream.flush()
             outputStream.close()
 
