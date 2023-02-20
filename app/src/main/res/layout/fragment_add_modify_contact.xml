@@ -3,13 +3,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".ui.add_and_modify_contact.AddAndModifyContact">
 
-    <ImageView
+    <View
         android:id="@+id/add_con_frame"
         android:layout_width="match_parent"
-        android:layout_height="300dp"
-        android:src="@drawable/add_contact_frame"
+        android:layout_height="350dp"
+        android:background="@drawable/dialog_box"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
@@ -19,16 +20,16 @@
 
     <ImageButton
         android:id="@+id/close_add_fragment"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
         android:background="@color/white"
         android:src="@drawable/cross_32px"
         app:layout_constraintBottom_toBottomOf="@id/add_con_frame"
-        app:layout_constraintTop_toTopOf="@id/add_con_frame"
         app:layout_constraintStart_toStartOf="@id/add_con_frame"
-        app:layout_constraintEnd_toEndOf="@id/add_con_frame"
-        app:layout_constraintHorizontal_bias="0.1"
-        app:layout_constraintVertical_bias="0.2"/>
+        app:layout_constraintTop_toTopOf="@id/add_con_frame"
+        app:layout_constraintEnd_toStartOf="@id/create_contact_text"
+        app:layout_constraintVertical_bias="0.1"
+        app:layout_constraintHorizontal_bias="0.15"/>
 
     <TextView
         android:id="@+id/create_contact_text"
@@ -38,73 +39,68 @@
         android:layout_marginStart="15dp"
         android:text="@string/create_contact"
         android:textColor="@color/light_purple"
-        android:textSize="28sp"
+        android:textSize="30sp"
         app:layout_constraintBottom_toBottomOf="@id/add_con_frame"
         app:layout_constraintTop_toTopOf="@id/add_con_frame"
         app:layout_constraintStart_toStartOf="@id/add_con_frame"
         app:layout_constraintEnd_toEndOf="@id/add_con_frame"
-        app:layout_constraintVertical_bias="0.18"/>
+        app:layout_constraintVertical_bias="0.15"/>
 
-    <ImageView
-        android:id="@+id/create_user_icon"
-        android:layout_width="wrap_content"
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/image_upload_button"
+        android:layout_width="170dp"
         android:layout_height="wrap_content"
-        android:src="@drawable/user_icon3_48px"
-        app:layout_constraintBottom_toBottomOf="@id/add_con_frame"
+        android:drawableStart="@drawable/ic_camera_theme_dark"
         app:layout_constraintTop_toBottomOf="@id/create_contact_text"
-        app:layout_constraintStart_toStartOf="@id/add_con_frame"
-        app:layout_constraintEnd_toStartOf="@id/full_name"
-        app:layout_constraintVertical_bias="0.09"
-        app:layout_constraintHorizontal_bias="0.8"/>
+        app:layout_constraintBottom_toTopOf="@id/full_name"
+        app:layout_constraintStart_toStartOf="@id/create_contact_text"
+        app:layout_constraintEnd_toEndOf="@id/create_contact_text"
+        android:background="@drawable/button_view2"
+        android:text="@string/upload_image"
+        android:textColor="@color/white"
+        android:textSize="18sp"
+        android:gravity="center" />
 
     <EditText
         android:id="@+id/full_name"
-        android:layout_width="260dp"
-        android:layout_height="38dp"
+        android:layout_width="350dp"
+        android:layout_height="48dp"
         android:background="@drawable/edit_text_view"
+        android:drawableStart="@drawable/ic_baseline_person_24"
+        android:drawablePadding="10dp"
         android:hint="@string/full_name"
         android:paddingStart="20dp"
         android:paddingEnd="10dp"
-        android:textSize="18sp"
         android:textColor="@color/light_purple"
         android:textColorHint="@color/light_purple"
+        android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="@id/add_con_frame"
-        app:layout_constraintTop_toBottomOf="@id/create_contact_text"
-        app:layout_constraintStart_toStartOf="@id/add_con_frame"
         app:layout_constraintEnd_toEndOf="@id/add_con_frame"
-        app:layout_constraintVertical_bias="0.1"
-        app:layout_constraintHorizontal_bias="0.75"/>
-
-
-    <ImageView
-        android:id="@+id/call_icon"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@drawable/call_icon2_48px"
-        app:layout_constraintBottom_toBottomOf="@id/add_con_frame"
-        app:layout_constraintTop_toBottomOf="@id/full_name"
         app:layout_constraintStart_toStartOf="@id/add_con_frame"
-        app:layout_constraintEnd_toStartOf="@id/full_name"
-        app:layout_constraintVertical_bias="0.09"
-        app:layout_constraintHorizontal_bias="0.8"/>
+        app:layout_constraintTop_toBottomOf="@id/create_contact_text"
+        app:layout_constraintVertical_bias="0.35"
+        android:inputType="text"/>
 
     <EditText
         android:id="@+id/contact_number"
-        android:layout_width="260dp"
-        android:layout_height="38dp"
+        android:layout_width="350dp"
+        android:layout_height="48dp"
         android:background="@drawable/edit_text_view"
+        android:drawableStart="@drawable/ic_call_icon"
+        android:drawablePadding="10dp"
+        android:drawableTint="@color/light_purple"
         android:hint="@string/phone_number"
         android:paddingStart="20dp"
         android:paddingEnd="10dp"
-        android:textSize="18sp"
         android:textColor="@color/light_purple"
         android:textColorHint="@color/light_purple"
+        android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="@id/add_con_frame"
+        app:layout_constraintEnd_toEndOf="@id/full_name"
+        app:layout_constraintStart_toStartOf="@id/full_name"
         app:layout_constraintTop_toBottomOf="@id/full_name"
-        app:layout_constraintStart_toStartOf="@id/add_con_frame"
-        app:layout_constraintEnd_toEndOf="@id/add_con_frame"
         app:layout_constraintVertical_bias="0.1"
-        app:layout_constraintHorizontal_bias="0.75"/>
+        android:inputType="phone"/>
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/save_contact_btn"
@@ -117,8 +113,5 @@
         app:layout_constraintTop_toBottomOf="@id/contact_number"
         app:layout_constraintStart_toStartOf="@id/add_con_frame"
         app:layout_constraintEnd_toEndOf="@id/add_con_frame"
-        app:layout_constraintVertical_bias="0.18"/>
-
-
-
+        app:layout_constraintVertical_bias="0.4"/>
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -8,11 +8,12 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.milestone2.adapters.MemeViewAdapter
 import com.example.milestone2.api_resources.MemeAPI
 import com.example.milestone2.api_resources.MemeAPIEndpointInterface
-import com.example.milestone2.data_classes.Data
-import com.example.milestone2.data_classes.Meme
-import com.example.milestone2.data_classes.MemeData
+import com.example.milestone2.classes.Data
+import com.example.milestone2.classes.Meme
+import com.example.milestone2.classes.MemeData
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
+import kotlinx.coroutines.runBlocking
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -37,51 +38,53 @@ class MainActivity : AppCompatActivity() {
 
         if(json!!.isEmpty())
         {
-            // calling get method from api
-            val call: Call<MemeData> = MemeAPI.getInstance().create(MemeAPIEndpointInterface::class.java).getMemeData()
-            // Asynchronously send the request and notify callback of its response
-            // or if an error occurred talking to the server, creating the request, or processing the response.
-            call.enqueue(object : Callback<MemeData> {
-                override fun onResponse(
-                    call: Call<MemeData>,
-                    response: Response<MemeData>
-                ) {
-                    if (response.isSuccessful) {
-                        memesList = response.body()?.data!!
-                        // adding list to the custom meme adapter
-                        adapter = memesList.memes?.let { MemeViewAdapter(it) }!!
-                        // attaching it with recycler view adapter
-                        rView.adapter = adapter
+            runBlocking {
+                // calling get method from api
+                val call: Call<MemeData> = MemeAPI.getInstance().create(MemeAPIEndpointInterface::class.java).getMemeData()
+                // Asynchronously send the request and notify callback of its response
+                // or if an error occurred talking to the server, creating the request, or processing the response.
+                call.enqueue(object : Callback<MemeData> {
+                    override fun onResponse(
+                        call: Call<MemeData>,
+                        response: Response<MemeData>
+                    ) {
+                        if (response.isSuccessful) {
+                            memesList = response.body()?.data!!
+                            // adding list to the custom meme adapter
+                            adapter = memesList.memes?.let { MemeViewAdapter(it) }!!
+                            // attaching it with recycler view adapter
+                            rView.adapter = adapter
 
-                        // Creating an Editor object to edit(write to the file)
-                        val editor = sharedPreferences.edit()
+                            // Creating an Editor object to edit(write to the file)
+                            val editor = sharedPreferences.edit()
 
 
-                        val json = gson.toJson(memesList.memes!!)
-                        editor.putString("Set", json );
-                        //Log.d("APP CHECK", json.toString())
-                        // Storing the key and its value as the data fetched from edittext
+                            val json = gson.toJson(memesList.memes!!)
+                            editor.putString("Set", json );
+                            //Log.d("APP CHECK", json.toString())
+                            // Storing the key and its value as the data fetched from edittext
 
-                        // Once the changes have been made,
-                        // we need to commit to apply those changes made,
-                        // otherwise, it will throw an error
+                            // Once the changes have been made,
+                            // we need to commit to apply those changes made,
+                            // otherwise, it will throw an error
 
-                        // Once the changes have been made,
-                        // we need to commit to apply those changes made,
-                        // otherwise, it will throw an error
-                        editor.apply()
+                            // Once the changes have been made,
+                            // we need to commit to apply those changes made,
+                            // otherwise, it will throw an error
+                            editor.apply()
+                        }
+                        else
+                        {
+                            //Log.d("Test: ", "Not successfully")
+                            Toast.makeText(applicationContext, "Connection Error, Please try again later", Toast.LENGTH_LONG).show()
+                        }
                     }
-                    else
-                    {
-                        //Log.d("Test: ", "Not successfully")
+
+                    override fun onFailure(call: Call<MemeData>, t: Throwable) {
                         Toast.makeText(applicationContext, "Connection Error, Please try again later", Toast.LENGTH_LONG).show()
                     }
-                }
-
-                override fun onFailure(call: Call<MemeData>, t: Throwable) {
-                    Toast.makeText(applicationContext, "Connection Error, Please try again later", Toast.LENGTH_LONG).show()
-                }
-            })
+                })
+            }
         }
         else
         {
