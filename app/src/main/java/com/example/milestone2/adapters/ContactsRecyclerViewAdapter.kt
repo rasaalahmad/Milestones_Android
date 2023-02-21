@@ -3,7 +3,6 @@ package com.example.milestone2.adapters
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.net.Uri
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,18 +10,21 @@ import android.widget.ImageButton
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.milestone2.R
-import com.example.milestone2.data_classes.Contacts
+import com.example.milestone2.classes.Contacts
 
 class ContactsRecyclerViewAdapter( private var optionsMenuClickListener: OptionsMenuClickListener):
                                 RecyclerView.Adapter<ContactsRecyclerViewAdapter.ViewHolder>() {
-    lateinit var contactsList: ArrayList<Contacts>
-
-    @SuppressLint("NotifyDataSetChanged")
-    fun setList(contacts: ArrayList<Contacts>)
-    {
-        contactsList = contacts
+    val contactsList: MutableList<Contacts> by lazy {
+        mutableListOf()
     }
 
+    @SuppressLint("NotifyDataSetChanged")
+    fun setList(contacts: MutableList<Contacts>)
+    {
+        contactsList.clear()
+        contactsList.addAll(contacts)
+        notifyDataSetChanged()
+    }
 
     interface OptionsMenuClickListener {
         fun onOptionsMenuClicked(position: Int)

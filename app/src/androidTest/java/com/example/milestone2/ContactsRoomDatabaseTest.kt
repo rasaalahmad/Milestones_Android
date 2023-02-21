@@ -1,7 +1,7 @@
 package com.example.milestone2
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
-import com.example.milestone2.data_classes.Contacts
+import com.example.milestone2.classes.Contacts
 import com.example.milestone2.room_database.AppDatabase
 import com.example.milestone2.room_database.ContactDao
 import dagger.hilt.android.testing.HiltAndroidRule

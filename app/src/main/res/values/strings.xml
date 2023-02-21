@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Milestone2</string>
+    <string name="app_name">Contacts App</string>
     <string name="milestone_2">Milestone 2</string>
     <string name="meme_name_">Meme Name</string>
     <string name="meme_from_api">Meme from API</string>
@@ -20,7 +20,6 @@
     <string name="sign_up">Sign up</string>
     <string name="person_name">Person Name</string>
     <string name="sample_number">+923---------</string>
-    <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="create_contact">Create Contact</string>
     <string name="save">Save</string>
@@ -45,4 +44,6 @@
     <string name="rasaal_ahmad">Rasaal Ahmad</string>
     <string name="rasaalahmad_folio3_com">rasaalahmad@folio3.com</string>
     <string name="my_name">Rasaal Ahmad</string>
+    <string name="fcm_message">FCM Message</string>
+    <string name="msg_token_fmt">FCM Token</string>
 </resources>

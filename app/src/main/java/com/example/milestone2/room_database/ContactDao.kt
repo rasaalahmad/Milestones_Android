@@ -1,7 +1,7 @@
 package com.example.milestone2.room_database
 
 import androidx.room.*
-import com.example.milestone2.data_classes.Contacts
+import com.example.milestone2.classes.Contacts
 
 @Dao
 interface ContactDao {

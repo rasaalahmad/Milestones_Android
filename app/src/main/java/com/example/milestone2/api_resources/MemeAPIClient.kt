@@ -1,8 +1,8 @@
 package com.example.milestone2.api_resources
 
 import androidx.lifecycle.MutableLiveData
-import com.example.milestone2.data_classes.Data
-import com.example.milestone2.data_classes.MemeData
+import com.example.milestone2.classes.Data
+import com.example.milestone2.classes.MemeData
 import kotlinx.coroutines.runBlocking
 import retrofit2.Call
 import retrofit2.Callback

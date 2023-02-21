@@ -1,11 +1,9 @@
 package com.example.milestone2.ui.home
 
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.example.milestone2.data_classes.Contacts
+import com.example.milestone2.classes.Contacts
 import com.example.milestone2.room_database.ContactDatabaseClient
-import dagger.assisted.Assisted
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 

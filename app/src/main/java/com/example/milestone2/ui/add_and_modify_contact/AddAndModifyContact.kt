@@ -2,6 +2,8 @@ package com.example.milestone2.ui.add_and_modify_contact
 
 import android.annotation.SuppressLint
 import android.content.DialogInterface
+import android.content.Intent
+import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -10,10 +12,13 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
+import androidx.annotation.RequiresApi
 import androidx.appcompat.widget.AppCompatImageButton
 import androidx.fragment.app.DialogFragment
+import com.example.milestone2.ContactsNavigationDrawerActivity
 import com.example.milestone2.R
-import com.example.milestone2.data_classes.Contacts
+import com.example.milestone2.classes.Contacts
+import com.example.milestone2.classes.NotificationServiceClass
 import com.example.milestone2.ui.home.HomeViewModel
 import kotlinx.coroutines.runBlocking
 
@@ -26,6 +31,8 @@ class AddAndModifyContact(private val contactViewModel: HomeViewModel):DialogFra
     private lateinit var titleTextView: TextView
     private var onDismissListener: DialogInterface.OnDismissListener? = null
     private var uid:Int = 0
+    private lateinit var intent:Intent
+    private lateinit var notificationServiceClass: NotificationServiceClass
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -39,6 +46,8 @@ class AddAndModifyContact(private val contactViewModel: HomeViewModel):DialogFra
         phoneNumber = fragmentView.findViewById(R.id.contact_number)
         closeBtn = fragmentView.findViewById(R.id.close_add_fragment)
         titleTextView = fragmentView.findViewById(R.id.create_contact_text)
+        intent = Intent(context, ContactsNavigationDrawerActivity::class.java)
+        notificationServiceClass = NotificationServiceClass(requireContext())
         return fragmentView
     }
 
@@ -48,17 +57,20 @@ class AddAndModifyContact(private val contactViewModel: HomeViewModel):DialogFra
     }
 
 
+    @RequiresApi(Build.VERSION_CODES.M)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         dialog?.window?.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
         addUpdateCheck()
     }
 
+    @RequiresApi(Build.VERSION_CODES.M)
     override fun onResume() {
         super.onResume()
         addUpdateCheck()
     }
 
+    @RequiresApi(Build.VERSION_CODES.M)
     @SuppressLint("SetTextI18n")
     private fun addUpdateCheck()
     {
@@ -84,6 +96,7 @@ class AddAndModifyContact(private val contactViewModel: HomeViewModel):DialogFra
         }
     }
 
+    @RequiresApi(Build.VERSION_CODES.M)
     private fun buttonListeners(isUpdate:Boolean) // 1 for modify 0 for create
     {
         savebtn.setOnClickListener {
@@ -98,6 +111,8 @@ class AddAndModifyContact(private val contactViewModel: HomeViewModel):DialogFra
                                 phoneNumber.text.toString()
                             )
                         )
+                        notificationServiceClass.createNotification("New Contact",
+                            "${personName.text} added in Contacts", intent)
                     }
                     Toast.makeText(
                         fragmentView.context,
