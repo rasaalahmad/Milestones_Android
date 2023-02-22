@@ -11,7 +11,6 @@ import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
-import android.widget.ImageButton
 import android.widget.PopupMenu
 import android.widget.Toast
 import androidx.core.view.get
@@ -20,6 +19,11 @@ import androidx.fragment.app.FragmentActivity
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import androidx.work.Constraints
+import androidx.work.OneTimeWorkRequest
+import androidx.work.OneTimeWorkRequestBuilder
+import androidx.work.WorkManager
+import com.example.milestone2.MyWorker
 import com.example.milestone2.R
 import com.example.milestone2.adapters.ContactsRecyclerViewAdapter
 import com.example.milestone2.ui.add_and_modify_contact.AddAndModifyContact
@@ -34,7 +38,7 @@ import kotlinx.coroutines.runBlocking
 
 @AndroidEntryPoint
 class HomeFragment : Fragment() {
-    val homeViewModel: HomeViewModel by viewModels()
+    private val homeViewModel: HomeViewModel by viewModels()
     private var _binding: FragmentHomeBinding? = null
     private lateinit var addContactButton: FloatingActionButton
     lateinit var  contactsAdapter: ContactsRecyclerViewAdapter
@@ -42,6 +46,7 @@ class HomeFragment : Fragment() {
     private lateinit var rView: RecyclerView
     private lateinit var crashTestButton: Button
     private lateinit var firebaseAnalytics: FirebaseAnalytics
+    private lateinit var myWorkRequest: OneTimeWorkRequest
     // This property is only valid between onCreateView and
     // onDestroyView.
     private val binding get() = _binding!!
@@ -70,8 +75,14 @@ class HomeFragment : Fragment() {
         })
         setListAdapter()
         rView.adapter = contactsAdapter
-        listeners()
 
+        val constraints = Constraints.Builder()
+            .setRequiresCharging(false)
+            .build()
+        myWorkRequest = OneTimeWorkRequestBuilder<MyWorker>()
+            .setConstraints(constraints)
+            .build()
+        listeners()
         return root
     }
 
@@ -107,6 +118,7 @@ class HomeFragment : Fragment() {
         }
 
         addContactButton.setOnClickListener{
+            WorkManager.getInstance(activity as Context).enqueue(myWorkRequest)
             val bundle = Bundle()
             bundle.putBoolean("isUpdate", false)
             addAndModifyContact.arguments = bundle

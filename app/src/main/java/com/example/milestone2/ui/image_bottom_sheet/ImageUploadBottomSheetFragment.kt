@@ -62,9 +62,6 @@ class ImageUploadBottomSheetFragment(private var homeViewModel: HomeViewModel) :
         if (requestCode == CAPTURE_IMAGE_ID) {
             // BitMap is data structure of image file which store the image in memory
             val imageBitmap = data!!.data as Bitmap?
-            // Set the image in imageview for display
-           // clickImageId.setImageBitmap(photo)
-
             // Create a unique file name for the captured image using a timestamp
             val timeStamp = SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault()).format(Date())
             val imageFileName = "IMG_${timeStamp}.jpeg"
@@ -85,7 +82,6 @@ class ImageUploadBottomSheetFragment(private var homeViewModel: HomeViewModel) :
            // Log.d("image_path",imageFile.absolutePath)
 
             homeViewModel.mutableLiveContact.value!!.image_path = contentUri.toString()
-          //  listener?.onImageCaptured(absoluteImagePath)
         }
         else if(requestCode == REQUEST_IMAGE_SELECT){
             homeViewModel.mutableLiveContact.value!!.image_path = data?.data.toString() // uri path
