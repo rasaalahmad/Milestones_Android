@@ -19,7 +19,7 @@
     <string name="not_a_member_sign_up">Not a member? <font color='#01C6DB'> Sign up</font> </string>
     <string name="sign_up">Sign up</string>
     <string name="person_name">Person Name</string>
-    <string name="sample_number">+923---------</string>
+    <string name="sample_number" translatable="false">+923---------</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="create_contact">Create Contact</string>
     <string name="save">Save</string>
@@ -33,7 +33,7 @@
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="nav_header_title">Android Studio</string>
-    <string name="nav_header_subtitle">android.studio@android.com</string>
+    <string name="nav_header_subtitle" translatable="false">android.studio@android.com</string>
     <string name="nav_header_desc">Navigation header</string>
     <string name="action_settings">Settings</string>
 
@@ -42,9 +42,16 @@
     <string name="menu_slideshow">Slideshow</string>
     <string name="about_us">About us</string>
     <string name="rasaal_ahmad">Rasaal Ahmad</string>
-    <string name="rasaalahmad_folio3_com">rasaalahmad@folio3.com</string>
+    <string name="rasaalahmad_folio3_com" translatable="false">rasaalahmad@folio3.com</string>
     <string name="my_name">Rasaal Ahmad</string>
-    <string name="fcm_message">FCM Message</string>
-    <string name="msg_token_fmt">FCM Token</string>
+    <string name="fcm_message" translatable="false">FCM Message</string>
+    <string name="msg_token_fmt" translatable="false">FCM Token</string>
     <string name="test_crashlytics">Test Crashlytics</string>
+    <string name="dialog_message">Are you sure?</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
+    <string name="contact_delete_message">Contact Deleted Successfully</string>
+    <string name="contact_update_message">Contact Updated Successfully</string>
+    <string name="contact_added_message">Contact Added Successfully</string>
+    <string name="enter_complete_details">Enter complete details!!</string>
 </resources>
