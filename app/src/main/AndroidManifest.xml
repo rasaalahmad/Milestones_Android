@@ -23,8 +23,7 @@
             android:name=".ContactsNavigationDrawerActivity"
             android:exported="true"
             android:label="Contacts App"
-            android:theme="@style/Theme.Milestone2.NoActionBar"
-            android:configChanges="orientation|screenSize|keyboardHidden">
+            android:theme="@style/Theme.Milestone2.NoActionBar">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
