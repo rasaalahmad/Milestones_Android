@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.app.AlertDialog
 import android.content.Context
 import android.content.DialogInterface
+import android.content.res.Configuration
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.MenuItem
@@ -196,7 +197,6 @@ class HomeFragment : Fragment() {
         addAndModifyContact.arguments = bundle
         addAndModifyContact.show(requireActivity().supportFragmentManager,"CreateNewContact")
     }
-
 
     override fun onDestroyView() {
         super.onDestroyView()
