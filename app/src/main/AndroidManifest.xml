@@ -6,7 +6,9 @@
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.CALL_PHONE" />
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE"/>
-    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" tools:node="remove"/>
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS"/>
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-feature android:name="android.hardware.camera" />
 
     <application
         android:name=".hilt.HiltApplication"
@@ -23,7 +25,8 @@
             android:name=".ContactsNavigationDrawerActivity"
             android:exported="true"
             android:label="Contacts App"
-            android:theme="@style/Theme.Milestone2.NoActionBar">
+            android:theme="@style/Theme.Milestone2.NoActionBar"
+            android:configChanges="orientation|screenSize|keyboardHidden">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
