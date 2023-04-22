@@ -11,8 +11,12 @@ import javax.inject.Inject
 class HomeViewModel @Inject
 constructor (private var repository: ContactDatabaseClient)
     : ViewModel() {
-
+    var mutableLiveContact:MutableLiveData<Contacts> = MutableLiveData()
     var allContacts: MutableLiveData<List<Contacts>> = MutableLiveData()
+
+    init {
+        mutableLiveContact.postValue(Contacts())
+    }
 
     suspend fun insert(contact: Contacts) {
         repository.insert(contact)
